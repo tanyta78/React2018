@@ -3,6 +3,7 @@ import { handleResponse } from '../../helpers';
 import { API_URL } from '../../config';
 import Loading from '../common/Loading';
 import Table from './Table';
+import Pagination from './Pagination';
 
 class List extends Component {
 	constructor() {
@@ -12,18 +13,30 @@ class List extends Component {
 			loading: false,
 			currencies: [],
 			error: null,
+			totalPages: 0,
+			page: 1,
 		};
+
+		this.handlePaginationClick = this.handlePaginationClick.bind(this);
 	}
 
 	componentDidMount() {
+		this.fetchCurrencies();
+	}
+
+	fetchCurrencies(){
 		this.setState({ loading: true });
 
-		fetch(`${API_URL}/cryptocurrencies?page=1&perPage=20`)
+		const { page } = this.state;
+
+		fetch(`${API_URL}/cryptocurrencies?page=${page}&perPage=20`)
 			.then(handleResponse)
 			.then((data) => {
-
+				const { currencies, totalPages } = data;
 				this.setState({
-					currencies: data.currencies, loading: false
+					currencies,
+					totalPages,
+					loading: false
 				});
 			})
 			.catch((error) => {
@@ -45,8 +58,20 @@ class List extends Component {
 		}
 	}
 
+	handlePaginationClick(direction) {
+		let nextPage = this.state.page;
+
+		nextPage = direction === 'next' ? nextPage+1 : nextPage-1;
+
+
+		this.setState({page:nextPage},()=>{
+			this.fetchCurrencies();
+		});
+
+	} 
+
 	render() {
-		const { loading, error, currencies } = this.state;
+		const { loading, error, currencies, page, totalPages } = this.state;
 
 		//render only loding component, if loading state is set to true
 		if (loading) {
@@ -59,10 +84,19 @@ class List extends Component {
 		}
 
 		return (
-			<Table
-				currencies={currencies}
-				renderChangePercent={this.renderChangePercent}
-			/>
+			<div>
+				<Table
+					currencies={currencies}
+					renderChangePercent={this.renderChangePercent}
+				/>
+
+				<Pagination
+					page={page}
+					totalPages={totalPages}
+					handlePaginationClick={this.handlePaginationClick}
+				/>
+			</div>
+
 		);
 	}
 }
