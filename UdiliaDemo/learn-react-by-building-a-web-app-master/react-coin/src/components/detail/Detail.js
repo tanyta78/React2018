@@ -18,6 +18,18 @@ class Detail extends Component {
 	componentDidMount() {
 		const currencyId = this.props.match.params.id;
 
+		this.fetchCurrency(currencyId);
+		
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (this.props.location.pathname !== nextProps.location.pathname) {
+			const newCurrencyId = nextProps.match.params.id;
+			this.fetchCurrency(newCurrencyId);
+		}
+	}
+
+	fetchCurrency(currencyId){
 		this.setState({
 			loading: true
 		});
@@ -43,7 +55,7 @@ class Detail extends Component {
 		const { loading, error, currency } = this.state;
 
 		if (loading) {
-			return <div className="loading-container">Loading... <Loading	/></div>;
+			return <div className="loading-container">Loading... <Loading /></div>;
 		}
 
 		if (error) {
