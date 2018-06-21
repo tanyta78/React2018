@@ -43,7 +43,7 @@ class Detail extends Component {
 		const { loading, error, currency } = this.state;
 
 		if (loading) {
-			return <div className="loading-container">Loading... <Loading /></div>;
+			return <div className="loading-container">Loading... <Loading	/></div>;
 		}
 
 		if (error) {
