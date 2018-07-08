@@ -37,13 +37,15 @@ export default class CreateCommentForm extends Component {
 		requester.post('appdata', 'comments', 'kinvey', comment)
 			.then(res => {
 			
-				// to handle success
-				observer.trigger(observer.events.notification, { type: 'success', message: 'Successfully created comment!' });
-				//to redirect to updated post details
+				let endpoint = `comments?query={"postId":"${this.props.postId}"}&sort={"_kmd.ect": -1}`;
 				
-				console.log('Hello from comment creation');
-				this.props.history.push(`/post/details/${comment.postId}`);
-				this.setState({content:''});
+				requester.get('appdata',endpoint,'kinvey').then(commentsData=>{
+					
+					this.props.setComments(commentsData);
+					this.setState({content:''});
+					// to handle success
+					observer.trigger(observer.events.notification, { type: 'success', message: 'Successfully created comment!' });
+				});				
 			})
 			.catch(err => {
 				//to handle err

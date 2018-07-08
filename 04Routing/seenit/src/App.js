@@ -14,8 +14,9 @@ import PostCatalog from './components/Post/PostCatalog';
 import Logout from './components/auth/Logout';
 import CreatePostPage from './components/Post/CreatePostPage';
 import PostDetailPage from './components/Post/PostDetailPage';
+import EditPostPage from './components/Post/EditPostPage';
+import DeletePost from './components/Post/DeletePost';
 import DeleteComment from './components/Comment/DeleteComment';
-
 
 class App extends Component {
 	
@@ -32,7 +33,9 @@ class App extends Component {
 					<Route path='/post/create' component={CreatePostPage}/>
 					<Route path='/myPosts' render={props=> <PostCatalog author='true'/>}/>
 					<Route path='/post/details/:id' component={PostDetailPage}/>
-					<Route path='/comment/delete/:id' component={DeleteComment}/>
+					<Route path='/post/edit/:id' component={EditPostPage}/>
+					<Route path='/post/delete/:id' render={props => <DeletePost {...props}/>}/>
+					<Route path='/comment/delete/:id' render={props => <DeleteComment {...props}/>}/>
 					<Route path='/logout' component={Logout}/>
 				</main>
 				<Footer/>

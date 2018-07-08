@@ -24,7 +24,12 @@ export default class Post extends Component {
             if (value !== 1) return 's';
             else return '';
         }
-    }
+	}
+	
+	isAuthor(){
+		
+		return this.props.author===sessionStorage.username;
+	}
 
 	render() {
 		return (
@@ -52,12 +57,15 @@ export default class Post extends Component {
 								<li className="action">
 									<Link to={`/post/details/${this.props._id}`}>Details</Link>
 								</li>
+								{this.isAuthor() && 
 								<li className="action">
 									<Link to={`/post/edit/${this.props._id}`} className="editPost">Edit</Link>
-								</li>
+								</li>}
+								{this.isAuthor() && 
 								<li className="action">
 									<Link to={`/post/delete/${this.props._id}`} className="deletePost">Delete</Link>
 								</li>
+								}
 							</ul>
 						</div>
 

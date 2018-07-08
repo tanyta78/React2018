@@ -3,18 +3,30 @@ import {Link} from 'react-router-dom';
 
 import '../../style/comment.css';
 
+
 export default class Comment extends Component {
 	
+	isAuthor(){
+		
+		return this.props.author===sessionStorage.username;
+	}
+
 	render(){
-		//to get userId and authorId
-		let isAuthor = true;
-		let deleteLink =`/comment/delete/${this.props.commentId}`;
+		console.log(this.props);
+		const linkTo={
+			pathname: `/comment/delete/${this.props.commentId}`, 
+			postId: `${this.props.postId}`
+		};
+	
+		
 		return(
 			<article className="comment">
 				<div className="comment-content">
 					{this.props.content}
+
 				</div>
-				{isAuthor && <Link to={deleteLink} className="action">[Delete]</Link>}
+				
+				{this.isAuthor() && <Link to={linkTo} className="deletePost">Delete</Link>}
 			</article>
 		);
 	}

@@ -19,7 +19,24 @@ export default class PostDetailPage extends Component {
 			imageUrl: '',
 			comments:[]
 		};
+
+		this.getAllComments=this.getAllComments.bind(this);
 	}
+
+	setComments(data){
+		this.setState({comments:data});
+	}
+
+	getAllComments(){
+		let postId =this.props.match.params.id;
+		let endpoint = `comments?query={"postId":"${postId}"}&sort={"_kmd.ect": -1}`;
+	
+		requester.get('appdata',endpoint,'kinvey').then(commentsData=>{
+			console.log(commentsData);
+			this.setState({comments:commentsData});
+		});
+	}
+
 	componentDidMount(){
 		//to find exact post with appropriate info
 		let postId=this.props.match.params.id;
@@ -34,11 +51,7 @@ export default class PostDetailPage extends Component {
 					imageUrl: data.imageUrl,
 				});
 
-				let endpoint = `comments?query={"postId":"${postId}"}&sort={"_kmd.ect": -1}`;
-				requester.get('appdata',endpoint,'kinvey').then(commentsData=>{
-					
-					this.setState({comments:commentsData});
-				});
+				this.getAllComments(postId);
 				
 			}
 		).catch(err=>{
@@ -54,8 +67,8 @@ export default class PostDetailPage extends Component {
 				<Navigation />
 				<section id="viewPostDetails">
 					<PostDetails {...this.state}/>
-					<CreateCommentForm postId={this.props.match.params.id} {...this.props}/>
-					<CommentCatalog comments={this.state.comments}/>
+					<CreateCommentForm postId={this.props.match.params.id} setComments={this.getAllComments}  />
+					<CommentCatalog comments={this.state.comments} {...this.props} setComments={this.getAllComments}/>
 				</section>
 			</div>
 		);
