@@ -9,10 +9,12 @@ let coursesService = (() => {
 		return requester.get('appdata', endpoint, 'kinvey');
 	}
 
-	function createCourse(authorId, categoryId, price, duration, place) {
+	function createCourse(authorId, categoryId,description,imageUrl, price, duration, place) {
 		let courseObj = {
 			authorId,
 			categoryId,
+			description,
+			imageUrl,
 			price,
 			duration,
 			place,
@@ -24,10 +26,12 @@ let coursesService = (() => {
 		return requester.post('appdata', 'courses', 'kinvey', courseObj);
 	}
 
-	function editCourse(courseId, authorId, categoryId, price, duration, place, likes, views) {
+	function editCourse(courseId, authorId, categoryId,description,imageUrl, price, duration, place, likes, views) {
 		let updatedcourseObj = {
 			authorId,
 			categoryId,
+			description,
+			imageUrl,
 			price,
 			duration,
 			place,
@@ -43,14 +47,20 @@ let coursesService = (() => {
 		return requester.remove('appdata', `courses/${courseId}`, 'kinvey');
 	}
 
-	function loadOwnCourses(userId) {
-		let endpoint = `courses?query={"authorId":"${userId}"}`;
+	function loadOwnCourses(authorId) {
+		let endpoint = `courses?query={"authorId":"${authorId}"}`;
 
 		return requester.get('appdata', endpoint, 'kinvey');
 	}
 
 	function loadCourseById(courseId) {
 		let endpoint = `courses/${courseId}`;
+
+		return requester.get('appdata', endpoint, 'kinvey');
+	}
+
+	function loadApprovedCoursesByCategoryId(categoryId) {
+		let endpoint = `courses?query={"categoryId":"${categoryId}","approved":"true"}`;
 
 		return requester.get('appdata', endpoint, 'kinvey');
 	}
@@ -62,6 +72,7 @@ let coursesService = (() => {
 		editCourse,
 		deleteCourse,
 		loadOwnCourses,
-		loadCourseById
+		loadCourseById,
+		loadApprovedCoursesByCategoryId
 	};
 })();

@@ -23,14 +23,14 @@ $(() => {
 	(() => {
 		$('#menu').find('a[data-target]').click(navigateTo);
 		$('#registerForm').submit(registerUser);
-		$('#updateUserForm').submit(updateUser);
+		$('#updateAuthorForm').submit(updateAuthor);
 		$('#loginForm').submit(loginUser);
 		$('#createCourseForm').submit(createCourse);
 		$('#createCommentForm').submit(createComment);
 		$('#editCourseForm').submit(editCourse);
 		$('#linkMenuLogout').click(logoutUser);
-		$('#linkCatalog').click(loadAllApprovedPosts);
-		$('#linkMyCourses').click(loadMyPosts);
+		$('#linkCatalog').click(loadAllApprovedCourses);
+		$('#linkMyCourses').click(loadMyCourses);
 		$('.notification').click(function () {
 			$(this).hide();
 		});
@@ -40,43 +40,49 @@ $(() => {
 		userLoggedOut();
 	} else {
 		userLoggedIn();
-		loadAllApprovedPosts();
+		loadAllApprovedCourses();
 	}
 
 	// LOGIC TO VIEW MY POSTS
-	function loadMyPosts() {
-		let username = sessionStorage.getItem('username');
+	function loadMyCourses() {
+		let userId = sessionStorage.getItem('userId');
 
-		coursesService.loadOwnCourses(username)
-			.then((myOwnPosts) => {
-				console.log(myOwnPosts);
-				displayMyOwnPosts(myOwnPosts);
+		authorService.loadAuthorByUserId(userId)
+			.then(author=>{
+				let authorId = author._id;
+				coursesService.loadOwnCourses(authorId)
+					.then((myOwnCourses) => {
+						console.log(myOwnCourses);
+						displayMyOwnCourses(myOwnCourses);
+					});
+		
 			}).catch(handleError);
 	}
 
-	function displayMyOwnPosts(myOwnPosts) {
-		let postsContainer = $('#myForumPosts');
-		postsContainer.empty();
-		if (myOwnPosts.length === 0) {
-			postsContainer.text('No posts in database.');
+	// TODO: What to show in myCourses???
+	function displayMyOwnCourses(myOwnCourses) {
+		let coursesContainer = $('#myForumPosts');
+		coursesContainer.empty();
+		if (myOwnCourses.length === 0) {
+			coursesContainer.text('No courses in database.');
 		}
 
 		let counter = 1;
-		for (let postObj of myOwnPosts) {
-			let courseId = postObj['_id'];
+		for (let courseObj of myOwnCourses) {
+			let courseId = courseObj['_id'];
 			let rank = counter++;
-			let timeCreated = calcTime(postObj._kmd.ect);
-			let url = postObj['url'];
-			let imageUrl = postObj['imageUrl'];
-			let author = postObj['author'];
-			let title = postObj['title'];
-			let description = postObj['description'] === ''
+			let timeCreated = calcTime(courseObj._kmd.ect);
+			let url = courseObj['url'];
+			let imageUrl = courseObj['imageUrl'];
+			let author = courseObj['author'];
+			let title = courseObj['title'];
+			let description = courseObj['description'] === ''
 				? 'No description.'
-				: postObj['description'];
+				: courseObj['description'];
 
 			let detailsLink = $(`<a  href="#" data-id="${courseId}">Details</a>`)
 				.click(loadCourseDetails);
-			let postDiv = $('<div class="post">')
+			let courseDiv = $('<div class="post">')
 				.append($('<div class="col rank">')
 					.append('<span>').text(rank))
 				.append($('<div class="col thumbnail">')
@@ -94,132 +100,145 @@ $(() => {
 								.append($('<li class="action">').append(detailsLink))))));
 
 			if (author === sessionStorage.getItem('username')) {
-				let controls = postDiv
+				let controls = courseDiv
 					.find('.controls')
 					.find('ul');
 
 				controls.append($('<li class="action">')
 					.append($(`<a href="#" data-id="${courseId}">Delete</a>`)
-						.click(deletePost)));
+						.click(deleteCourse)));
 				controls.append($('<li class="action">')
 					.append($(`<a href="#" data-id="${courseId}">Edit</a>`)
 						.click(displayEditForm)));
 			}
 
-			postsContainer.append(postDiv);
+			coursesContainer.append(courseDiv);
 		}
 	}
 
 	// LOGIC TO VIEW CATALOG
-	function loadAllApprovedPosts() {
-		coursesService.loadAllApprovedPosts()
-			.then((allPosts) => {
-				displayCatalog(allPosts);
+	function loadAllApprovedCourses() {
+		coursesService.loadAllApprovedCourses()
+			.then((allCourses) => {
+				displayCatalog(allCourses);
 			}).catch(handleError);
 	}
+	//TODO: - WHAT TO SHOW IN COURSE CATALOG
+	function displayCatalog(allCourses) {
+		let coursesContainer = $('#allForumCourses');
+		coursesContainer.empty();
 
-	function displayCatalog(allPosts) {
-		let postsContainer = $('#allForumPosts');
-		postsContainer.empty();
-
-		if (allPosts.length === 0) {
-			postsContainer.text('No posts in database.');
+		if (allCourses.length === 0) {
+			coursesContainer.text('No courses in database.');
 		}
 
 		let counter = 1;
-		for (let postObj of allPosts) {
-			let courseId = postObj['_id'];
+		for (let courseObj of allCourses) {
+			let courseId = courseObj['_id'];
 			let rank = counter++;
-			let timeCreated = calcTime(postObj._kmd.ect);
-			let url = postObj['url'];
-			let imageUrl = postObj['imageUrl'];
-			let author = postObj['author'];
-			let title = postObj['title'];
-			let description = postObj['description'] === ''
-				? 'No description.'
-				: postObj['description'];
+			let timeCreated = calcTime(courseObj._kmd.ect);
+			let authorId = courseObj['authorId'];
+			let categoryId = courseObj['categoryId'];	
+			let imageUrl = courseObj['imageUrl'];
+			let price = courseObj['price'];
+			let duration = courseObj['duration'];
+			let place = courseObj['place'];
+			let likes = courseObj['likes'];
+			let views = courseObj['views'];
+
 
 			let detailsLink = $(`<a  href="#" data-id="${courseId}">Details</a>`)
 				.click(loadCourseDetails);
-			let postDiv = $('<div class="post">')
+			let courseDiv = $('<div class="post">')
 				.append($('<div class="col rank">')
 					.append('<span>').text(rank))
 				.append($('<div class="col thumbnail">')
-					.append($(`<a href="${url}">`)
-						.append($(`<img src="${imageUrl}">`))))
+					.append($(`<img src="${imageUrl}">`)))
 				.append($('<div class="post-content">')
 					.append($('<div class="title">')
-						.append($(`<a href="${url}">`)
-							.text(title)))
-					.append($('<div class="details">')
-						.append($('<div class="info">')
-							.text(`submitted ${timeCreated} ago by ${author}`))
-						.append($('<div class="controls">')
-							.append($('<ul>')
-								.append($('<li class="action">').append(detailsLink))))));
+						.text(categoryName)))
+				.append($('<div class="details">')
+					.append($('<div class="info">')
+						.text(`submitted ${timeCreated} ago by ${authorFullName}`))
+					.append($('<div class="controls">')
+						.append($('<ul>')
+							.append($('<li class="action">').append(detailsLink)))));
 
-			if (author === sessionStorage.getItem('username')) {
-				let controls = postDiv
+			if (authorId === sessionStorage.getItem('userId')) {
+				let controls = courseDiv
 					.find('.controls')
 					.find('ul');
 
 				controls.append($('<li class="action">')
 					.append($(`<a href="#" data-id="${courseId}">Delete</a>`)
-						.click(deletePost)));
+						.click(deleteCourse)));
 				controls.append($('<li class="action">')
 					.append($(`<a href="#" data-id="${courseId}">Edit</a>`)
 						.click(displayEditForm)));
 			}
 
-			postsContainer.append(postDiv);
+			coursesContainer.append(courseDiv);
 		}
 	}
 
-	// LOGIC TO CREATE POST
-	function createPost(ev) {
+	// LOGIC TO CREATE COURSE
+	function createCourse(ev) {
 		ev.preventDefault();
-		let author = sessionStorage.getItem('username');
-		let urlInput = $(this).find('input[name="url"]');
-		let titleInput = $(this).find('input[name="title"]');
-		let imgInput = $(this).find('input[name="image"]');
+		let imgInput = $(this).find('input[name="imageUrl"]');
+		let priceInput = $(this).find('input[name="price"]');
+		let durationInput = $(this).find('input[name="duration"]');
+		let placeInput = $(this).find('input[name="place"]');
 		let descInput = $(this).find('textarea[name="description"]');
+		//  TODO: create select input for category. Load all categories from db.Set categoryId as option value or data-categoryId
+		//$('#example').append('<option value="foo" selected="selected">Foo</option>');
+		let categoryInput = $(this).find('select[name="category"]');
 
-		if (urlInput.val() === '' || titleInput.val() === '') {
-			showError('Url/Title cannot be empty!');
-			return;
-		}
+		// TODO: add validation
+		// if (urlInput.val() === '' || titleInput.val() === '') {
+		// 	showError('Url/Title cannot be empty!');
+		// 	return;
+		// }
 
-		if (!urlInput.val().startsWith('http')) {
-			showError('Url should start with http!');
-			return;
-		}
+		// if (!urlInput.val().startsWith('http')) {
+		// 	showError('Url should start with http!');
+		// 	return;
+		// }
 
-		let title = titleInput.val();
+		let userId = sessionStorage.getItem('userId');
+
 		let description = descInput.val();
-		let url = urlInput.val();
 		let imageUrl = imgInput.val();
+		let price = priceInput.val();
+		let duration = durationInput.val();
+		let place = placeInput.val();
+		let categoryId = categoryInput.find(':selected').val();
+		
+		authorService.loadAuthorByUserId(userId)
+			.then((author)=>{
+				let authorId=author._id;
+				coursesService.createPost(authorId, categoryId,description,imageUrl, price, duration, place)
+					.then(() => {
+						placeInput.val('');
+						durationInput.val('');
+						priceInput.val('');
+						imgInput.val('');
+						descInput.val('');
+						showInfo('Course created. Please wait for admin approval.');
+						loadMyCourses();
 
-		coursesService.createPost(author, title, description, url, imageUrl)
-			.then(() => {
-				urlInput.val('');
-				titleInput.val('');
-				imgInput.val('');
-				descInput.val('');
-				showInfo('Post created.');
-				loadAllApprovedPosts();
-				showView('Catalog');
+					});
 			}).catch(handleError);
 	}
 
-	// LOGIC TO DELETE POST
-	function deletePost() {
+	// LOGIC TO DELETE COURSE
+	function deleteCourse() {
 		let courseId = $(this).attr('data-id');
 
-		coursesService.deletePost(courseId)
+		coursesService.deleteCourse(courseId)
 			.then(() => {
-				showInfo('Post deleted.');
-				loadAllApprovedPosts();
-				showView('Catalog');
+				showInfo('Course deleted.');
+				loadMyCourses();
+				// showView('Catalog');
 			}).catch(handleError);
 	}
 
@@ -227,15 +246,20 @@ $(() => {
 	function displayEditForm() {
 		let courseId = $(this).attr('data-id');
 		let editForm = $('#editCourseForm');
-
+		
 		coursesService.loadCourseById(courseId)
 			.then((courseInfo) => {
-				editForm.find('input[name="url"]').val(courseInfo['url']);
-				editForm.find('input[name="title"]').val(courseInfo['title']);
-				editForm.find('input[name="image"]').val(courseInfo['imageUrl']);
+				editForm.find('input[name="imageUrl"]').val(courseInfo['imageUrl']);
+				editForm.find('input[name="price"]').val(courseInfo['price']);
+				editForm.find('input[name="duration"]').val(courseInfo['duration']);
+				editForm.find('input[name="place"]').val(courseInfo['place']);
 				editForm.attr('data-id', courseInfo._id);
+				editForm.attr('data-authorId', courseInfo.authorId);
+				editForm.attr('data-categoryId', courseInfo.categoryId);
+				editForm.attr('data-likes', courseInfo.likes);
+				editForm.attr('data-views', courseInfo.views);
 				editForm.find('textarea[name="description"]').val(courseInfo['description']);
-				showView('PostEdit');
+				showView('CourseEdit');
 			}).catch(handleError);
 
 	}
@@ -243,36 +267,44 @@ $(() => {
 	function editCourse(ev) {
 		ev.preventDefault();
 		let courseId = $(this).attr('data-id');
-		let author = sessionStorage.getItem('username');
-		let urlInput = $(this).find('input[name="url"]');
-		let titleInput = $(this).find('input[name="title"]');
-		let imgInput = $(this).find('input[name="image"]');
+		let authorId = $(this).attr('data-authorId');	
+		let categoryId=	$(this).attr('data-categotyId');
+		let likes =$(this).attr('data-likes');
+		let views =$(this).attr('data-views');	
+		let imgInput = $(this).find('input[name="imageUrl"]');
+		let priceInput = $(this).find('input[name="price"]');
+		let durationInput = $(this).find('input[name="duration"]');
+		let placeInput = $(this).find('input[name="place"]');
 		let descInput = $(this).find('textarea[name="description"]');
+		
+		//TODO: create courseValidation
+		//TODO: create constants - messages ...
 
-		if (urlInput.val() === '' || titleInput.val() === '') {
-			showError('Url/Title cannot be empty!');
-			return;
-		}
+		// if (urlInput.val() === '' || titleInput.val() === '') {
+		// 	showError('Url/Title cannot be empty!');
+		// 	return;
+		// }
 
-		if (!urlInput.val().startsWith('http')) {
-			showError('Url should start with http!');
-			return;
-		}
+		// if (!urlInput.val().startsWith('http')) {
+		// 	showError('Url should start with http!');
+		// 	return;
+		// }
 
-		let title = titleInput.val();
 		let description = descInput.val();
-		let url = urlInput.val();
 		let imageUrl = imgInput.val();
-
-		coursesService.editPost(courseId, author, title, description, url, imageUrl)
+		let price = priceInput.val();
+		let duration = durationInput.val();
+		let place = placeInput.val();
+		
+		coursesService.editCourse(courseId, authorId, categoryId,description,imageUrl, price, duration, place, likes, views)
 			.then(() => {
-				urlInput.val('');
-				titleInput.val('');
-				imgInput.val('');
 				descInput.val('');
-				showInfo(`Post ${title} created.`);
-				loadAllApprovedPosts();
-				showView('Catalog');
+				imgInput.val('');
+				priceInput.val('');
+				durationInput.val('');
+				placeInput.val('');
+				showInfo('Course edited. Now please wait for approval.');
+				loadMyCourses();
 			}).catch(handleError);
 	}
 
@@ -289,17 +321,17 @@ $(() => {
 		Promise.all([coursePromise, commentsPromise])
 			.then(([courseInfo, comments]) => {
 				let authorId = courseInfo.authorId;
-				authorService.loadAuthorById(authorId).then(authorInfo=>{
-					displayCourseDetails([courseInfo, authorInfo,comments]);
+				authorService.loadAuthorById(authorId).then(authorInfo => {
+					displayCourseDetails([courseInfo, authorInfo, comments]);
 					showView('CourseDetails');
 				});
-				
+
 			})
 			.catch(handleError);
 	}
 	//courseInfo - category,price,duration,place
 	//authorInfo - fullName,cityId,phone,email,profileImage,personalInfo
-	function displayCourseDetails([courseInfo,authorInfo, comments]) {
+	function displayCourseDetails([courseInfo, authorInfo, comments]) {
 		$('#createCommentForm').attr('data-id', courseInfo._id);
 		let courseContainer = $('#courseDetails');
 		courseContainer.empty();
@@ -313,7 +345,7 @@ $(() => {
 					.append($('<strong>').text(authorInfo['fullName'])))
 				.append($('<div class="details">').text(category))));
 
-		//TO DO ADD DETAILS INFO
+		//TODO: ... ADD DETAILS INFO
 
 		let commentsContainer = $('#allComments');
 		commentsContainer.empty();
@@ -323,12 +355,12 @@ $(() => {
 		}
 
 		for (let comment of comments) {
-			let commentAuthor = comment['authorId'];
+			let commentAuthor = comment['username'];
 			let content = comment['content'];
 			let currentComment = $('<article class="comment">');
 			currentComment.append($('<div class="comment-content">').text(content));
 
-			if (commentAuthor === sessionStorage.getItem('userId')) {
+			if (commentAuthor === sessionStorage.getItem('username')) {
 				let deleteBtn = $(`<a href="#" data-target="${courseInfo._id}" data-id="${comment._id}" class="action">[Delete]</a>`)
 					.click(deleteComment);
 				currentComment.append(deleteBtn);
@@ -355,10 +387,10 @@ $(() => {
 		ev.preventDefault();
 		let contentInput = $('#cmtContent');
 		let courseId = $(this).attr('data-id');
-		let authorId = sessionStorage.getItem('userId');
+		let username = sessionStorage.getItem('username');
 		let content = contentInput.val();
 
-		commentsService.createComment(authorId, content, courseId)
+		commentsService.createComment(username, content, courseId)
 			.then(() => {
 				showInfo('Comment created.');
 				loadCourseDetails(courseId);
@@ -399,26 +431,21 @@ $(() => {
 		}
 	}
 
-	// LOGIC TO UPDATE USER PROFILE
-	function updateUser(ev) {
+	// LOGIC TO UPDATE AUTHOR PROFILE
+	function updateAuthor(ev) {
 		ev.preventDefault();
-		let updateUserForm = $('#updateUserForm');
-		let usernameInput = updateUserForm.find('input[name="usernameNew"]');
-		let passInput = updateUserForm.find('input[name="passwordNew"]');
-		let repeatPassInput = updateUserForm.find('input[name="repeatPassNew"]');
-		let fullNameInput = updateUserForm.find('input[name="fullNameNew"]');
-		let addressInput = updateUserForm.find('input[name="addressNew"]');
-		let phoneInput = updateUserForm.find('input[name="phoneNew"]');
-		let emailInput = updateUserForm.find('input[name="emailNew"]');
-		let cityInput = updateUserForm.find('input[name="cityNew"]');
-		let profileImgInput = updateUserForm.find('input[name="profileImgNew"]');
-		let websiteInput = updateUserForm.find('input[name="websiteNew"]');
-		let infoInput = updateUserForm.find('input[name="infoNew"]');
-
-
-		let usernameVal = usernameInput.val();
-		let passVal = passInput.val();
-		let repeatPassVal = repeatPassInput.val();
+		let updateAuthorForm = $('#updateAuthorForm');
+		let authorId = $(this).attr('data-id');
+		let userId = sessionStorage.getItem('userId');
+		let fullNameInput = updateAuthorForm.find('input[name="fullNameNew"]');
+		let addressInput = updateAuthorForm.find('input[name="addressNew"]');
+		let phoneInput = updateAuthorForm.find('input[name="phoneNew"]');
+		let emailInput = updateAuthorForm.find('input[name="emailNew"]');
+		let cityInput = updateAuthorForm.find('input[name="cityNew"]');
+		let profileImgInput = updateAuthorForm.find('input[name="profileImgNew"]');
+		let websiteInput = updateAuthorForm.find('input[name="websiteNew"]');
+		let infoInput = updateAuthorForm.find('input[name="infoNew"]');
+	
 		let fullNameVal = fullNameInput.val();
 		let addressVal = addressInput.val();
 		let phoneVal = phoneInput.val();
@@ -428,11 +455,13 @@ $(() => {
 		let websiteVal = websiteInput.val();
 		let infoVal = infoInput.val();
 
-		let allIsValid = validateRegisterFields(usernameVal, passVal, repeatPassVal);
+		// TODO: add validation
+		let allIsValid =true;
+		// validateRegisterFields(usernameVal, passVal, repeatPassVal);
 		if (allIsValid) {
-			let userData = {
-				username: usernameVal,
-				password: passVal,
+			let authorData = {
+				authorId: authorId,
+				userId:userId,
 				fullName: fullNameVal,
 				address: addressVal,
 				phone: phoneVal,
@@ -442,11 +471,8 @@ $(() => {
 				website: websiteVal,
 				info: infoVal
 			};
-			auth.update(userData)
-				.then((userInfo) => {
-					usernameInput.val('');
-					passInput.val('');
-					repeatPassInput.val('');
+			authorService.updateProfile(authorData)
+				.then((authorInfo) => {
 					fullNameInput.val('');
 					addressInput.val('');
 					phoneInput.val('');
@@ -455,14 +481,39 @@ $(() => {
 					profileImgInput.val('');
 					websiteInput.val('');
 					infoInput.val('');
-					//to do check kinvey responce
-					//saveSession(userInfo);
+				
 					showInfo('Profile update successful.');
 				}).catch(handleError);
 		}
 	}
 
-	// LOGIC TO REGISTER USER
+	//LOGIC TO UPDATE USER - ADMIN FUNCTION
+	function updateUser(ev){
+		// TODO: add admin functionality and functions in authServise or adminServise
+		ev.preventDefault();
+		let updateUserForm = $('#updateUserForm');
+		let usernameInput = updateUserForm.find('input[name="usernameNew"]');
+		let passInput = updateUserForm.find('input[name="passwordNew"]');
+		let repeatPassInput = updateUserForm.find('input[name="repeatPassNew"]');
+		let usernameVal = usernameInput.val();
+		let passVal = passInput.val();
+		let repeatPassVal = repeatPassInput.val();
+		let allIsValid = validateRegisterFields(usernameVal, passVal, repeatPassVal);
+		if (allIsValid) {
+			let userData = {
+				username: usernameVal,
+				password: passVal
+			};
+			auth.update(userData)
+				.then((userInfo) => {
+					usernameInput.val('');
+					passInput.val('');
+					repeatPassInput.val('');
+				});
+		}
+	}
+
+	// LOGIC TO REGISTER USER and CREATE AUTHOR PROFILE
 	function registerUser(ev) {
 		ev.preventDefault();
 		let registerForm = $('#registerForm');
@@ -496,30 +547,37 @@ $(() => {
 			let userData = {
 				username: usernameVal,
 				password: passVal,
-				fullName: fullNameVal,
-				address: addressVal,
-				phone: phoneVal,
-				email: emailVal,
-				cityId: cityVal,
-				profileImg: profileImgVal,
-				website: websiteVal,
-				info: infoVal
 			};
 			auth.register(userData)
 				.then((userInfo) => {
-					usernameInput.val('');
-					passInput.val('');
-					repeatPassInput.val('');
-					fullNameInput.val('');
-					addressInput.val('');
-					phoneInput.val('');
-					emailInput.val('');
-					cityInput.val('');
-					profileImgInput.val('');
-					websiteInput.val('');
-					infoInput.val('');
-					saveSession(userInfo);
-					showInfo('User registration successful.');
+					let profileData = {
+						userId:userInfo._id,
+						fullName: fullNameVal,
+						address: addressVal,
+						phone: phoneVal,
+						email: emailVal,
+						cityId: cityVal,
+						profileImg: profileImgVal,
+						website: websiteVal,
+						info: infoVal
+					};
+					authorService.createAuthor(profileData)
+						.then(authorData=>{
+							usernameInput.val('');
+							passInput.val('');
+							repeatPassInput.val('');
+							fullNameInput.val('');
+							addressInput.val('');
+							phoneInput.val('');
+							emailInput.val('');
+							cityInput.val('');
+							profileImgInput.val('');
+							websiteInput.val('');
+							infoInput.val('');
+							saveSession(userInfo);
+							showInfo('User registration successful.');
+						});
+					
 				}).catch(handleError);
 		}
 	}
@@ -547,7 +605,7 @@ $(() => {
 		$('#profile').show();
 		$('#username').text(`Hello, ${sessionStorage.getItem('username')}!`);
 		showView('Catalog');
-		loadAllApprovedPosts();
+		loadAllApprovedCourses();
 	}
 
 	function saveSession(userInfo) {

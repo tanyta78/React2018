@@ -5,9 +5,9 @@ let commentsService = (() => {
 		return requester.get('appdata', endpoint, 'kinvey');
 	}
 
-	function createComment(authorId, content, courseId) {
+	function createComment(username, content, courseId) {
 		let commentData = {
-			authorId,
+			username,
 			content,
 			courseId
 		};

@@ -46,11 +46,18 @@ let authorService = (() => {
 		return requester.get('appdata', endpoint, 'kinvey');
 	}
 
+	//loadAuthorByUserId
+	function loadAuthorByUserId(userId) {
+		let endpoint=`authors?query={"userId":"${userId}"}`;
+
+		return requester.get('appdata', endpoint, 'kinvey');
+	}
+
 	return {
 		createAuthor,
 		updateProfile,
 		deleteAuthor,
-		loadAuthorById
-		
+		loadAuthorById,
+		loadAuthorByUserId
 	};
 })();
