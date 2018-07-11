@@ -31,6 +31,8 @@ $(() => {
 		$('#linkMenuLogout').click(logoutUser);
 		$('#linkCatalog').click(loadAllApprovedCourses);
 		$('#linkMyCourses').click(loadMyCourses);
+		$('#linkMyProfile').click(loadMyProfile);
+
 		$('.notification').click(function () {
 			$(this).hide();
 		});
@@ -48,14 +50,14 @@ $(() => {
 		let userId = sessionStorage.getItem('userId');
 
 		authorService.loadAuthorByUserId(userId)
-			.then(author=>{
+			.then(author => {
 				let authorId = author._id;
 				coursesService.loadOwnCourses(authorId)
 					.then((myOwnCourses) => {
 						console.log(myOwnCourses);
 						displayMyOwnCourses(myOwnCourses);
 					});
-		
+
 			}).catch(handleError);
 	}
 
@@ -76,9 +78,9 @@ $(() => {
 			let imageUrl = courseObj['imageUrl'];
 			let author = courseObj['author'];
 			let title = courseObj['title'];
-			let description = courseObj['description'] === ''
-				? 'No description.'
-				: courseObj['description'];
+			let description = courseObj['description'] === '' ?
+				'No description.' :
+				courseObj['description'];
 
 			let detailsLink = $(`<a  href="#" data-id="${courseId}">Details</a>`)
 				.click(loadCourseDetails);
@@ -138,7 +140,7 @@ $(() => {
 			let rank = counter++;
 			let timeCreated = calcTime(courseObj._kmd.ect);
 			let authorId = courseObj['authorId'];
-			let categoryId = courseObj['categoryId'];	
+			let categoryId = courseObj['categoryId'];
 			let imageUrl = courseObj['imageUrl'];
 			let price = courseObj['price'];
 			let duration = courseObj['duration'];
@@ -212,11 +214,11 @@ $(() => {
 		let duration = durationInput.val();
 		let place = placeInput.val();
 		let categoryId = categoryInput.find(':selected').val();
-		
+
 		authorService.loadAuthorByUserId(userId)
-			.then((author)=>{
-				let authorId=author._id;
-				coursesService.createPost(authorId, categoryId,description,imageUrl, price, duration, place)
+			.then((author) => {
+				let authorId = author._id;
+				coursesService.createPost(authorId, categoryId, description, imageUrl, price, duration, place)
 					.then(() => {
 						placeInput.val('');
 						durationInput.val('');
@@ -246,7 +248,7 @@ $(() => {
 	function displayEditForm() {
 		let courseId = $(this).attr('data-id');
 		let editForm = $('#editCourseForm');
-		
+
 		coursesService.loadCourseById(courseId)
 			.then((courseInfo) => {
 				editForm.find('input[name="imageUrl"]').val(courseInfo['imageUrl']);
@@ -267,16 +269,16 @@ $(() => {
 	function editCourse(ev) {
 		ev.preventDefault();
 		let courseId = $(this).attr('data-id');
-		let authorId = $(this).attr('data-authorId');	
-		let categoryId=	$(this).attr('data-categotyId');
-		let likes =$(this).attr('data-likes');
-		let views =$(this).attr('data-views');	
+		let authorId = $(this).attr('data-authorId');
+		let categoryId = $(this).attr('data-categotyId');
+		let likes = $(this).attr('data-likes');
+		let views = $(this).attr('data-views');
 		let imgInput = $(this).find('input[name="imageUrl"]');
 		let priceInput = $(this).find('input[name="price"]');
 		let durationInput = $(this).find('input[name="duration"]');
 		let placeInput = $(this).find('input[name="place"]');
 		let descInput = $(this).find('textarea[name="description"]');
-		
+
 		//TODO: create courseValidation
 		//TODO: create constants - messages ...
 
@@ -295,8 +297,8 @@ $(() => {
 		let price = priceInput.val();
 		let duration = durationInput.val();
 		let place = placeInput.val();
-		
-		coursesService.editCourse(courseId, authorId, categoryId,description,imageUrl, price, duration, place, likes, views)
+
+		coursesService.editCourse(courseId, authorId, categoryId, description, imageUrl, price, duration, place, likes, views)
 			.then(() => {
 				descInput.val('');
 				imgInput.val('');
@@ -335,12 +337,12 @@ $(() => {
 		$('#createCommentForm').attr('data-id', courseInfo._id);
 		let courseContainer = $('#courseDetails');
 		courseContainer.empty();
-		let category = courseInfo['category'] === ''
-			? 'No category'
-			: courseInfo['category'];
+		let category = courseInfo['category'] === '' ?
+			'No category' :
+			courseInfo['category'];
 		courseContainer.append($('<div class="col thumbnail">')
 			.append($(`<img src="${authorInfo['profileImage']}">`))
-			.append($('<div class="post-content">')
+			.append($('<div class="course-content">')
 				.append($('<div class="title">')
 					.append($('<strong>').text(authorInfo['fullName'])))
 				.append($('<div class="details">').text(category))));
@@ -432,10 +434,36 @@ $(() => {
 	}
 
 	// LOGIC TO UPDATE AUTHOR PROFILE
+	function loadMyProfile() {
+		let userId = sessionStorage.getItem('userId');
+
+		authorService.loadAuthorByUserId(userId)
+			.then(author => {
+				displayUpdateAuhtorForm(author);
+
+			}).catch(handleError);
+	}
+
+	function displayUpdateAuhtorForm(authorInfo) {
+		let editForm = $('#updateAuthorForm');
+
+		editForm.find('input[name="fullNameNew"]').val(authorInfo['fullName']);
+		editForm.find('input[name="addressNew"]').val(authorInfo['address']);
+		editForm.find('input[name="phoneNew"]').val(authorInfo['phone']);
+		editForm.find('input[name="emailNew"]').val(authorInfo['email']);
+		editForm.find('input[name="cityNew"]').val(authorInfo['city']);
+		editForm.find('input[name="profileImgNew"]').val(authorInfo['profileImg']);
+		editForm.find('input[name="websiteNew"]').val(authorInfo['website']);
+		editForm.find('input[name="infoNew"]').val(authorInfo['info']);
+		editForm.attr('data-id', authorInfo._id);
+		showView('MyProfile');
+
+	}
+
 	function updateAuthor(ev) {
 		ev.preventDefault();
 		let updateAuthorForm = $('#updateAuthorForm');
-		let authorId = $(this).attr('data-id');
+		let authorId = sessionStorage.getItem('authorId');
 		let userId = sessionStorage.getItem('userId');
 		let fullNameInput = updateAuthorForm.find('input[name="fullNameNew"]');
 		let addressInput = updateAuthorForm.find('input[name="addressNew"]');
@@ -445,7 +473,7 @@ $(() => {
 		let profileImgInput = updateAuthorForm.find('input[name="profileImgNew"]');
 		let websiteInput = updateAuthorForm.find('input[name="websiteNew"]');
 		let infoInput = updateAuthorForm.find('input[name="infoNew"]');
-	
+
 		let fullNameVal = fullNameInput.val();
 		let addressVal = addressInput.val();
 		let phoneVal = phoneInput.val();
@@ -456,12 +484,12 @@ $(() => {
 		let infoVal = infoInput.val();
 
 		// TODO: add validation
-		let allIsValid =true;
+		let allIsValid = true;
 		// validateRegisterFields(usernameVal, passVal, repeatPassVal);
 		if (allIsValid) {
 			let authorData = {
 				authorId: authorId,
-				userId:userId,
+				userId: userId,
 				fullName: fullNameVal,
 				address: addressVal,
 				phone: phoneVal,
@@ -481,14 +509,14 @@ $(() => {
 					profileImgInput.val('');
 					websiteInput.val('');
 					infoInput.val('');
-				
+
 					showInfo('Profile update successful.');
 				}).catch(handleError);
 		}
 	}
 
 	//LOGIC TO UPDATE USER - ADMIN FUNCTION
-	function updateUser(ev){
+	function updateUser(ev) {
 		// TODO: add admin functionality and functions in authServise or adminServise
 		ev.preventDefault();
 		let updateUserForm = $('#updateUserForm');
@@ -551,7 +579,7 @@ $(() => {
 			auth.register(userData)
 				.then((userInfo) => {
 					let profileData = {
-						userId:userInfo._id,
+						userId: userInfo._id,
 						fullName: fullNameVal,
 						address: addressVal,
 						phone: phoneVal,
@@ -562,7 +590,7 @@ $(() => {
 						info: infoVal
 					};
 					authorService.createAuthor(profileData)
-						.then(authorData=>{
+						.then(authorData => {
 							usernameInput.val('');
 							passInput.val('');
 							repeatPassInput.val('');
@@ -574,14 +602,14 @@ $(() => {
 							profileImgInput.val('');
 							websiteInput.val('');
 							infoInput.val('');
+							userInfo.authorId = authorData._id;
 							saveSession(userInfo);
 							showInfo('User registration successful.');
 						});
-					
+
 				}).catch(handleError);
 		}
 	}
-
 
 	function navigateTo() {
 		let viewName = $(this).attr('data-target');
@@ -615,6 +643,8 @@ $(() => {
 		sessionStorage.setItem('username', username);
 		let userId = userInfo._id;
 		sessionStorage.setItem('userId', userId);
+		let authorId = userInfo.authorId;
+		sessionStorage.setItem('authorId', authorId);
 		userLoggedIn();
 	}
 
