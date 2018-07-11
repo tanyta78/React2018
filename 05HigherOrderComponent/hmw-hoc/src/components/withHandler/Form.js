@@ -59,7 +59,7 @@ function withHandler(WrappedComponent, changeHandler) {
 				type={this.props.type}
 				name={this.props.name} 
 				value={this.props.value} 
-		 />);
+			/>);
 		}
 	}
 
