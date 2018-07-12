@@ -23,8 +23,8 @@ $(() => {
 	(() => {
 		$('#menu').find('a[data-target]').click(navigateTo);
 		$('#registerForm').submit(registerUser);
-		$('#updateAuthorForm').submit(updateAuthor);
 		$('#loginForm').submit(loginUser);
+		$('#updateAuthorForm').submit(updateAuthor);
 		$('#createCourseForm').submit(createCourse);
 		$('#createCommentForm').submit(createComment);
 		$('#editCourseForm').submit(editCourse);
@@ -574,10 +574,13 @@ $(() => {
 		if (allIsValid) {
 			let userData = {
 				username: usernameVal,
-				password: passVal,
+				password: passVal
 			};
+		
 			auth.register(userData)
 				.then((userInfo) => {
+					console.log('after user register');
+					console.log(userInfo);
 					let profileData = {
 						userId: userInfo._id,
 						fullName: fullNameVal,
@@ -591,6 +594,8 @@ $(() => {
 					};
 					authorService.createAuthor(profileData)
 						.then(authorData => {
+							console.log('after author register');
+							console.log(authorData);
 							usernameInput.val('');
 							passInput.val('');
 							repeatPassInput.val('');
@@ -649,6 +654,7 @@ $(() => {
 	}
 
 	function handleError(reason) {
+		console.log(reason);
 		showError(reason.responseJSON.description);
 	}
 
@@ -663,6 +669,7 @@ $(() => {
 		let errorBox = $('#errorBox');
 		errorBox.text(message);
 		errorBox.show();
+		console.log(message);
 		setTimeout(() => errorBox.fadeOut(), 3000);
 	}
 
