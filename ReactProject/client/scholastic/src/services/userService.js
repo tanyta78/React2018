@@ -14,6 +14,7 @@ export default {
 			sessionStorage.setItem('authtoken', res._kmd.authtoken);
 			sessionStorage.setItem('userRoles', userRoles.join(','));
 			sessionStorage.setItem('userId', res._id);
+			sessionStorage.setItem('username', res.username);
 
 			this.props.history.push('/catalog');
 		},
@@ -36,18 +37,6 @@ export default {
 			sessionStorage.setItem('authtoken', res._kmd.authtoken);
 			sessionStorage.setItem('userRoles', userRoles.join(','));
 			sessionStorage.setItem('userId', res._id);
-
-			authorService.createAuthor(res._id)
-				.then(authorObj=>{
-					this.props.history.push('/profile');
-					//TODO: handle success msg
-
-				})
-				.catch(
-					//TODO: handle error msg
-				);
-
-			
 		},
 		fail: function (res) {
 			observer.trigger(observer.events.notification, {

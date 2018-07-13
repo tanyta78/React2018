@@ -13,6 +13,7 @@ import { withAdminAuthorization } from './hocs/withAuthorization';
 import CourseDetails from './components/course/CourseDetails';
 import userService from './services/userService';
 import Search from './components/common/Search';
+import AuthorProfile from './components/user/AuthorProfile';
 
 class App extends Component {
 	componentDidMount() {
@@ -23,6 +24,7 @@ class App extends Component {
 			userService.login.send(data)
 				.then(res => {
 					sessionStorage.setItem('authtoken', res._kmd.authtoken);
+
 				})
 				.catch(console.log);
 		}
@@ -40,6 +42,8 @@ class App extends Component {
 					<Route path='/catalog' exact component={Catalog} />
 					<Route path='/logout' component={Logout} />
 					<Route path='/catalog/details/:id' component={CourseDetails} />
+					<Route path='/profile' render={props => <AuthorProfile {...props}/>}/>
+
 				</main>
 			</div>
 		);

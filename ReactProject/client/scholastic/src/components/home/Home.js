@@ -3,7 +3,7 @@ import LoginForm from '../user/LoginForm';
 import '../../styles/submit.css';
 import RegisterForm from '../user/RegisterForm';
 import About from './About';
-import CourseList from '../course/CourseList';
+import CourseListPublic from '../course/CourseListPublic';
 
 export default class Home extends Component {
     render = () => {
@@ -13,10 +13,10 @@ export default class Home extends Component {
                     <div></div>
                     <div className="signup">
                         <LoginForm {...this.props} />
-                        <RegisterForm {...this.props} />
+                        <RegisterForm {... this.props}/>
                     </div>
                     <About />
-                    <CourseList public="true"/>
+                    <CourseListPublic {...this.props}/>
                 </div>
             </section>
         )

@@ -5,13 +5,14 @@ export default{
 	// user/register => author/create
 	createAuthor:(userId)=> {
 		let userData = {
+			username:sessionStorage.username,
 			userId,
 			fullName:'',
 			address:'',
 			phone:'',
 			email:'',
 			cityId:'',
-			profileImage:'',
+			profileImg:'',
 			website:'',
 			personalInfo:''
 		};
@@ -22,13 +23,14 @@ export default{
 	//user/update => author/update
 	updateProfile:(data)=> {
 		let updatedProfileData = {
+			username:sessionStorage.username,
 			userId:data.userId,
 			fullName:data.fullName,
 			address:data.address,
 			phone:data.phone,
 			email:data.email,
 			cityId:data.city,
-			profileImage:data.profileImg,
+			profileImg:data.profileImg,
 			website:data.website,
 			personalInfo:data.info
 		};
@@ -54,4 +56,4 @@ export default{
 
 		return requester.get('appdata', endpoint, 'kinvey');
 	}
-}
+};

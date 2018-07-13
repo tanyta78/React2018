@@ -29,7 +29,7 @@ export default class Header extends Component {
 
         return (
             <header>
-                <span className="logo">☃</span><span className="header">SeenIt</span>
+                <span className="logo">&#9884;</span><span className="header">Scholastic</span>
                 {this.state.username ? loggedInSection : null}
             </header>
         )
