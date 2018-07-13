@@ -12,11 +12,14 @@ export default class CourseDetails extends Component {
         super(props);
         this.state = {
             _id: '',
-            title: '',
+            authorId: '',
+            categoryId: '',
             imageUrl: '',
-            url: '',
             description: '',
-            author: '',
+            place: '',
+            price: '',
+            views:'',
+            likes:'',
             createdOn: '',
             comments: []
         }
@@ -67,18 +70,22 @@ export default class CourseDetails extends Component {
     }
 
     render = () => {
-      
+      console.log('from course details');
+      console.log(this.state);
+      console.log(this.props);
+
+
         return (
             <Fragment>
                 <Navigation />
-                <section id="viewPostDetails">
-                    <article id="postDetails" className="post">
+                <section id="viewCourseDetails">
+                    <article id="courseDetails" className="course">
                         <div className="col thumbnail">
-                            <img src={this.state.url} />
+                            <img src={this.state.imageUrl} alt='url'/>
                         </div>
                         <div className="post-content">
-                            <div className="title">
-                                <strong>{this.state.title}</strong>
+                            <div className="category">
+                                <strong>{this.state.categoryId}</strong>
                             </div>
                             <div className="details">
                                 {this.state.description}
@@ -86,10 +93,13 @@ export default class CourseDetails extends Component {
                             <span>
                                 {courseService.createdBeforeDays(this.state.createdOn)} by {this.state.author} 
                             </span>
+                            <h3> TO ADD AUTHOR INFO OR COMPONENT AUTHOR DETAILS</h3>
+                            <span>{this.state.price}lv for {this.state.duration}</span>
+                           
                         </div>
                     </article>
             
-                     <CommentForm extraState={{courseId: this.state._id}} success={this.addComment} /> 
+                    <CommentForm extraState={{courseId: this.state._id}} success={this.addComment} /> 
 
                     <CommentList comments={this.state.comments} remove={this.removeComment} />
 

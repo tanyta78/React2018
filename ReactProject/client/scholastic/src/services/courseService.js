@@ -6,8 +6,8 @@ function pluralize(value) {
 }
 
 export default {
-	loadAllApprovedCourses:()=> {
-		let endpoint='courses?query={"approved":"true"}';
+	loadAllApprovedCourses:(endpoint)=> {
+		// let endpoint='courses?query={"approved":"true"}';
 		return requester.get('appdata', endpoint, 'kinvey');
 	},
 

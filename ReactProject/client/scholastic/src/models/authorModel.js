@@ -1,6 +1,7 @@
 export default {
 	defaultState: {
 		userId:'',
+		username:'',
 		fullName:'',
 		address:'',
 		phone:'',

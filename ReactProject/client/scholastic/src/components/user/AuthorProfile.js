@@ -34,7 +34,7 @@ class AuthorProfile extends Component {
 
 	onFormSubmit(e) {
 		e.preventDefault();
-		// to check input validation
+		//TODO: to check input validation
 		console.log(e.target);
 		let profile = {
 			username: e.target.username.value,
@@ -48,22 +48,47 @@ class AuthorProfile extends Component {
 			personalInfo: e.target.personalInfo.value,
 		};
 		console.log(profile);
+
+		authorService.updateProfile(profile)
+			.then(res => {
+				observer.trigger(observer.events.notification, { type: 'success', message: 'Profile updated successful.' });
+				
+				this.props.history.push('/catalog');
+			})
+			.catch(err => {
+				observer.trigger(observer.events.notification, {
+					type: 'error',
+					message: err.responseJSON.description
+				});
+				this.setState({
+					username: '',
+					userId: '',
+					fullName: '',
+					address: '',
+					phone: '',
+					email: '',
+					cityId: '',
+					profileImg: '',
+					website: '',
+					personalInfo: ''
+				});
+			})
+
 	}
+
 
 	componentDidMount() {
 		// to access detail in AuthorProfile component - withRouter + this.props.location.state.detail
 		let obj = {}
 		if (this.props.location.state !== undefined) {
 			Object.assign(obj, this.props, this.props.location.state.detail);
-			this.setState( obj );
-			//TODO: REDIRECT
+			this.setState(obj);
+
 		} else {
 			authorService.loadAuthorByUserId(sessionStorage.userId)
 				.then(res => {
-					Object.assign(obj, this.props, res[0]);					
-					this.setState( obj )
-			//TODO: REDIRECT
-
+					Object.assign(obj, this.props, res[0]);
+					this.setState(obj)
 				})
 		}
 
@@ -72,7 +97,7 @@ class AuthorProfile extends Component {
 	render = () => {
 		return (
 			<section id="authorProfile">
-				<Navigation/>
+				<Navigation />
 				<form id="updateAuthorForm" onSubmit={this.onFormSubmit}>
 					<h2>My profile</h2>
 					<label>Username:</label>

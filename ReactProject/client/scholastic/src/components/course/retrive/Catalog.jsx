@@ -7,7 +7,7 @@ export default class Catalog extends Component {
         return (
             <Fragment>
                 <Navigation />
-                <CourseList />
+                <CourseList author={this.props.author}/>
             </Fragment>
         )
     }

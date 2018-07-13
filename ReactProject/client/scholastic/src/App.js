@@ -3,17 +3,23 @@ import { Route } from 'react-router-dom';
 
 import './App.css';
 import './styles/site.css';
+import userService from './services/userService';
 
 import Header from './components/common/Header';
 import Home from './components/home/Home';
-import Catalog from './components/course/Catalog';
 import Notification from './components/common/Notification';
-import Logout from './components/user/Logout';
-import { withAdminAuthorization } from './hocs/withAuthorization';
-import CourseDetails from './components/course/CourseDetails';
-import userService from './services/userService';
 import Search from './components/common/Search';
+
 import AuthorProfile from './components/user/AuthorProfile';
+import Logout from './components/user/Logout';
+//import { withAdminAuthorization } from './hocs/withAuthorization';
+import Catalog from './components/course/retrive/Catalog';
+import CourseDetails from './components/course/retrive/CourseDetails';
+import CourseCreatePage from './components/course/create/CourseCreatePage';
+import CourseEditPage from './components/course/edit/CourseEditPage';
+import CourseDelete from './components/course/delete/CourseDelete';
+
+import DeleteComment from './components/comment/DeleteComment';
 
 class App extends Component {
 	componentDidMount() {
@@ -40,10 +46,14 @@ class App extends Component {
 					<Route path='/' exact component={Home} />
 					{/* <Route path='/catalog' exact component={withAdminAuthorization(Catalog)} /> */}
 					<Route path='/catalog' exact component={Catalog} />
-					<Route path='/logout' component={Logout} />
-					<Route path='/catalog/details/:id' component={CourseDetails} />
 					<Route path='/profile' render={props => <AuthorProfile {...props}/>}/>
-
+					<Route path='/myCourses'render={props=> <Catalog author='true'/>}/>
+					<Route path='/course/create' component={CourseCreatePage}/>
+					<Route path='/course/details/:id' component={CourseDetails} />
+					<Route path='/course/edit/:id' component={CourseEditPage} />	
+					<Route path='/course/delete/:id' render={props => <CourseDelete {...props}/>} />
+					<Route path='/comment/delete/:id' render={props => <DeleteComment {...props}/>}/>
+					<Route path='/logout' component={Logout} />
 				</main>
 			</div>
 		);

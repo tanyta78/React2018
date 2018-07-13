@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import userService from '../../services/userService';
 import authorService from '../../services/authorService';
 import requester from '../../api/requester';
 import observer from '../../api/observer';

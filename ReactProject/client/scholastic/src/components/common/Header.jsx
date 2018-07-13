@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import '../../styles/header.css';
-import observer from '../../api/observer';
-
 import {Link} from 'react-router-dom';
+
+import '../../styles/header.css';
+
+import observer from '../../api/observer';
 
 export default class Header extends Component {
     constructor(props) {
@@ -29,7 +30,8 @@ export default class Header extends Component {
 
         return (
             <header>
-                <span className="logo">&#9884;</span><span className="header">Scholastic</span>
+                <span className="logo">&#9884;</span>
+                <span className="header">Scholastic</span>
                 {this.state.username ? loggedInSection : null}
             </header>
         )
