@@ -1,4 +1,5 @@
 import requester from '../api/requester';
+import observer from '../api/observer';
 
 export default{
 	loadAllCommentsForCourse:(courseId)=> {
@@ -7,17 +8,12 @@ export default{
 		return requester.get('appdata', endpoint, 'kinvey');
 	},
 
-	createComment:(username, content, courseId)=> {
-		let commentData = {
-			username,
-			content,
-			courseId
-		};
-
-		return requester.post('appdata', 'comments', 'kinvey', commentData);
+	create:{
+		send: data  => requester.post('appdata', 'comments', 'kinvery', data),
+		fail: res => observer.trigger(observer.events.notification, res.responseJSON.message)
 	},
 
-	deleteComment:(commentId)=> {
+	delete:(commentId)=> {
 		return requester.remove('appdata', `comments/${commentId}`, 'kinvey');
 	}
-}
+};

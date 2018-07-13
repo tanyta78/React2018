@@ -7,10 +7,15 @@ import {Link} from 'react-router-dom';
 export default class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = { username: null };
+        this.state = { username: '' };
 
         observer.subscribe(observer.events.loginUser, this.userLoggedIn);
+        observer.subscribe(observer.events.logoutUser,this.userLogout);
     }
+
+    userLogout = ()=>{
+		this.setState({username:''});
+	}
 
     userLoggedIn = username =>
         this.setState({ username });

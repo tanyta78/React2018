@@ -3,17 +3,17 @@ import requester from '../api/requester';
 export default{
 
 	// user/register => author/create
-	createAuthor:(data)=> {
+	createAuthor:(userId)=> {
 		let userData = {
-			userId:data.userId,
-			fullName:data.fullName,
-			address:data.address,
-			phone:data.phone,
-			email:data.email,
-			cityId:data.city,
-			profileImage:data.profileImg,
-			website:data.website,
-			personalInfo:data.info
+			userId,
+			fullName:'',
+			address:'',
+			phone:'',
+			email:'',
+			cityId:'',
+			profileImage:'',
+			website:'',
+			personalInfo:''
 		};
 
 		return requester.post('appdata', 'authors', 'kinvey', userData);

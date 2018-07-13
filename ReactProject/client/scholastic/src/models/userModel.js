@@ -1,19 +1,19 @@
 export default {
-    defaultState: {
-        username: '',
-        password: ''
-    },
-    validate: obj => {
-        const {username, password} = obj;
+	defaultState: {
+		username: '',
+		password: ''
+	},
+	validate: obj => {
+		const {username, password} = obj;
 
-        if (!username) {
-            return "Username is required";
-        }
+		if (!username) {
+			return 'Username is required';
+		}
 
-        if (!password) {
-            return "Password is required.";
+		if (!password) {
+			return 'Password is required.';
 		}
 		
 		//TODO: add validation
-    }
+	}
 };

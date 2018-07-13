@@ -3,8 +3,9 @@ import LoginForm from '../user/LoginForm';
 import '../../styles/submit.css';
 import RegisterForm from '../user/RegisterForm';
 import About from './About';
+import CourseList from '../course/CourseList';
 
-export default class HomeContainer extends Component {
+export default class Home extends Component {
     render = () => {
         return (
             <section id="viewSignIn">
@@ -12,9 +13,10 @@ export default class HomeContainer extends Component {
                     <div></div>
                     <div className="signup">
                         <LoginForm {...this.props} />
-                        <RegisterForm />
+                        <RegisterForm {...this.props} />
                     </div>
                     <About />
+                    <CourseList public="true"/>
                 </div>
             </section>
         )

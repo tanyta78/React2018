@@ -1,4 +1,4 @@
-.post {
+.course {
     overflow: auto;
     background: #96cdf2;
     margin: 15px;
@@ -50,7 +50,7 @@
     text-align: center;
 }
 
-.post-content {
+.course-content {
     display: block;
     vertical-align: top;
     padding: 10px;

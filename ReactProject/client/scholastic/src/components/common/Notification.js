@@ -37,8 +37,8 @@ export default class Notification extends Component {
 
         if (this.state.message) {
             return (
-                <div id={notificationId} className="notification">
-                    <span>{this.state.message}</span>
+                <div id={notificationId} className="notification" onClick={this.hideNotification}>
+                    <span >{this.state.message}</span>
                 </div>)
         } else {
             return null;
