@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
-import Course from './Course';
-import '../../../styles/course.css';
-import courseService from '../../../services/courseService';
+import '../../../styles/all.css';
+
 import c from '../../../api/constants';
+import courseService from '../../../services/courseService';
+
+import Course from './Course';
 
 export default class CourseList extends Component {
 	constructor(props) {

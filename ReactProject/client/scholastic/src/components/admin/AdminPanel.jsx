@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import AdminNavigation from '../common/AdminNavigation';
+import '../../styles/all.css';
 
 export default class AdminPanel extends Component {
 

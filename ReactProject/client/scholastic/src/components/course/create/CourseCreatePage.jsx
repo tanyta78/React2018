@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import '../../../styles/course.css';
-import '../../../styles/submit.css';
+
+import '../../../styles/all.css';
 
 import Navigation from '../../common/Navigation';
 import CourseCreateForm from './CourseCreateForm';

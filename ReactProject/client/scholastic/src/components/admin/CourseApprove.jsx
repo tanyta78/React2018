@@ -3,8 +3,10 @@ import {Redirect} from 'react-router-dom';
 
 import observer from '../../api/observer';
 import requester from '../../api/requester';
-
 import c from '../../api/constants';
+
+import '../../styles/all.css';
+
 import courseService from '../../services/courseService';
 
 

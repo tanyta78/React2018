@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import '../../styles/all.css';
+
 import authorService from '../../services/authorService';
 import requester from '../../api/requester';
 import observer from '../../api/observer';

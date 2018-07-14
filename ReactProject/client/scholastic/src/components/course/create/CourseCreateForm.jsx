@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import '../../../styles/submit.css';
+import '../../../styles/all.css';
+
 import observer from '../../../api/observer';
 import c from '../../../api/constants';
 
@@ -50,8 +51,8 @@ export default class CourseCreateForm extends Component {
 			price: e.target.price.value,
 			views: 0,
 			likes: 0,
-			approved: false
-			
+			approved: false,
+			categories:[]
 		};
 
 		courseService.createCourse(courseObj).then(res => {
@@ -86,14 +87,19 @@ export default class CourseCreateForm extends Component {
 
 	render() {
 		console.log(this.state);
+		let categoriesSelect= this.state.categories.map((c,i)=>(<option value={`${c._id}`}>{c.name}</option>));
 		return (
 			<div className="submitArea">
 				<h1>Create Course</h1>
 				<p>Please, fill out the form. </p>
 				<form id="createCourseForm" className="submitForm" onSubmit={this.onFormSubmit}>
 					<label>Category:</label>
+					<select name="categoryId" onChange={this.onInputChange}>
+						<option value="all" selected>All</option>
+						{categoriesSelect}
+          			</select>
 					<input
-						name="categoryId"
+						
 						type="text"
 						onChange={this.onInputChange}
 					/>

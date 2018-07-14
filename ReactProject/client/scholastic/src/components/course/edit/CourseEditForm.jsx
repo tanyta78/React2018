@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import '../../../styles/course.css';
 
 import observer from '../../../api/observer';
-
+import requester from '../../../api/requester';
 import c from '../../../api/constants';
+
+import '../../../styles/all.css';
+
 import courseService from '../../../services/courseService';
 
 
@@ -43,7 +46,7 @@ export default class CourseEditForm extends Component {
 		let courseObj = {
 			id: courseId,
 			authorId: this.state.authorId,
-			categoryId: this.state.categoryId,
+			categoryId: e.target.categoryId.value,
 			description: e.target.description.value,
 			duration: e.target.duration.value,
 			imageUrl: e.target.imageUrl.value,
@@ -51,7 +54,8 @@ export default class CourseEditForm extends Component {
 			price: e.target.price.value,
 			views: this.state.views,
 			likes: this.state.likes,
-			approved: false
+			approved: false,
+
 		};
 		courseService.editCourse(courseObj)
 			.then(res => {
@@ -70,20 +74,22 @@ export default class CourseEditForm extends Component {
 		let courseId = this.props.match.params.id;
 		courseService.loadCourseById(courseId)
 			.then(res => {
-			
-				this.setState({
-					author: sessionStorage.username,
-					authorId: res.authorId,
-					categoryId: res.categoryId,
-					description: res.description,
-					duration: res.duration,
-					imageUrl: res.imageUrl,
-					place: res.place,
-					price: res.price,
-					views: res.views,
-					likes: res.likes,
-					approved: false,
-							
+				requester.get('appdata', 'categories', 'kinvey').then(categories => {
+
+					this.setState({
+						author: sessionStorage.username,
+						authorId: res.authorId,
+						categoryId: res.categoryId,
+						description: res.description,
+						duration: res.duration,
+						imageUrl: res.imageUrl,
+						place: res.place,
+						price: res.price,
+						views: res.views,
+						likes: res.likes,
+						approved: false,
+						categories: categories
+					});
 				});
 
 			}).catch(err => {
@@ -95,19 +101,19 @@ export default class CourseEditForm extends Component {
 	render() {
 		console.log('from edit course page');
 		console.log(this.state);
+		let categoriesSelect = this.state.categories.map((c, i) =>
+			(<option value={`${c._id}`}>{c.name}</option>));
+
 		return (
 			<section id="viewPostEdit">
 				<div className="submitArea">
 					<h1>Edit Course</h1>
 					<p>Please, fill out the form. </p>
 					<form id="editCourseForm" className="submitForm" onSubmit={this.onFormSubmit}>
-						{/* <label>Category:</label>
-						<input
-							name="categoryId"
-							type="text"
-							onChange={this.onInputChange}
-							value={this.state.categoryName}
-						/> */}
+						<label>Category:</label>
+						<select name="categoryId" onChange={this.onInputChange} value={`${this.state.categoryId}`}>
+							{categoriesSelect}
+						</select>
 						<label>Description:</label>
 						<textarea
 							name="description"

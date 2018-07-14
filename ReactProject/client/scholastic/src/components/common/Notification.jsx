@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+
 import observer from '../../api/observer';
-import '../../styles/notifications.css';
+
+import '../../styles/all.css';
 
 const DEFAULT_STATE = {
     message: null,

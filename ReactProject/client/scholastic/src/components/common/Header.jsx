@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import '../../styles/header.css';
+import '../../styles/all.css';
 
 import observer from '../../api/observer';
 

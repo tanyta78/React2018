@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Comment from './Comment';
 
-import '../../styles/comment.css'
+import '../../styles/all.css';
 
 export default class CommentList extends Component {
     render = () => {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 
+import '../../../styles/all.css';
+
 import observer from '../../../api/observer';
 import c from '../../../api/constants';
 

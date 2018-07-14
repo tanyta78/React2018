@@ -5,6 +5,7 @@ import requester from '../../api/requester';
 import observer from '../../api/observer';
 import c from '../../api/constants';
 
+import '../../styles/all.css';
 
 export default class CategoryDelete extends Component {
 

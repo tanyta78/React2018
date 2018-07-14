@@ -1,14 +1,11 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import '../../styles/comment.css';
-
+import '../../styles/all.css';
 
 export default class Comment extends Component{
 
 	isAuthor = ()=>{
-		// return true;
-		//TODO: validate!!!
 		return this.props.username===sessionStorage.username;
 	}
 

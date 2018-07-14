@@ -5,6 +5,8 @@ import '../../../styles/submit.css';
 import Navigation from '../../common/Navigation';
 import CourseEditForm from './CourseEditForm';
 
+import '../../../styles/all.css';
+
 export default class CourseEditPage extends Component {
 
 	render() {

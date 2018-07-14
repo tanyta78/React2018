@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import c from '../../../api/constants';
+
+import '../../../styles/all.css';
+
 import Navigation from '../../common/Navigation';
 import AdminNavigation from '../../common/AdminNavigation';
-
 import CourseList from './CourseList';
-import c from '../../../api/constants';
 
 class Catalog extends Component {
 

@@ -4,6 +4,8 @@ import withFormManager from '../../hocs/withFormManager';
 import commentService from '../../services/commentService';
 import commentModel from '../../models/commentModel';
 
+import '../../styles/all.css';
+
 class CommentForm extends Component {
     render = () => {             
         return (

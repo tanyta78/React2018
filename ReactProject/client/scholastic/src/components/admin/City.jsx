@@ -1,9 +1,9 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import '../../styles/comment.css';
-import c from '../../api/constants';
+import '../../styles/all.css';
 
+import c from '../../api/constants';
 
 export default class City extends Component{
 

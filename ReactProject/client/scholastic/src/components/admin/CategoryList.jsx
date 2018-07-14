@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
-import Category from './Category';
-import '../../styles/course.css';
+import '../../styles/all.css';
+
 import requester from '../../api/requester';
+
+import Category from './Category';
 import AdminNavigation from '../common/AdminNavigation';
 
 export default class CategoryList extends Component {

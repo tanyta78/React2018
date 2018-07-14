@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import '../../../styles/all.css';
+
 import courseService from '../../../services/courseService';
 import requester from '../../../api/requester';
 import c from '../../../api/constants';

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
-import City from './City';
-import '../../styles/course.css';
+import '../../styles/all.css';
+
 import requester from '../../api/requester';
+
 import AdminNavigation from '../common/AdminNavigation';
+import City from './City';
 
 export default class CityList extends Component {
     constructor(props) {

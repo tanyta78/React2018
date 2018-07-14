@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
+import '../../../styles/all.css';
+
 import Navigation from '../../common/Navigation';
 import courseService from '../../../services/courseService';
 import commentService from '../../../services/commentService';

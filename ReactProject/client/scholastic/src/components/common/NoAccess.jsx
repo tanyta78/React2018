@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import '../../styles/comment.css';
+import '../../styles/all.css';
+
 import c from '../../api/constants';
 
 export default class NoAccess extends Component {

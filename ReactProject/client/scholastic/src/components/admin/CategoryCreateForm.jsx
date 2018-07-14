@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter} from 'react-router-dom';
 
-import '../../styles/submit.css';
+import '../../styles/all.css';
 
 import observer from '../../api/observer';
 import requester from '../../api/requester';

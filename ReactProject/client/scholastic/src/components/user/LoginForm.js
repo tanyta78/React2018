@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import '../../styles/all.css';
+
 import withFormManager from '../../hocs/withFormManager';
 import userModel from '../../models/userModel'
 import userService from '../../services/userService'

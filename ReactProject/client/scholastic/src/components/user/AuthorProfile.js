@@ -5,6 +5,8 @@ import authorService from '../../services/authorService';
 import observer from '../../api/observer';
 import c from '../../api/constants';
 
+import '../../styles/all.css';
+
 import Navigation from '../common/Navigation';
 
 

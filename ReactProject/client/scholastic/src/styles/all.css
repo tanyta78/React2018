@@ -1,0 +1,396 @@
+/* MAIN */
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* 
+.div {
+    border: 1px solid black;
+} */
+
+body {
+    background: #dddddd;
+    min-height: 100vh;
+}
+
+#container {
+    margin: 10px;
+}
+
+.content {
+    background: ivory;
+    overflow: auto;
+    height: 100%;
+}
+
+footer {
+    background: darkcyan;
+    color: black
+}
+
+footer img {
+    height: 5%;
+    width: 5%;
+    border-radius: 50%;
+}
+
+.welcome {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
+.welcome>* {
+    vertical-align: top;
+    overflow: auto;
+}
+
+.about {
+    background: cadetblue;
+    padding: 20px;
+    margin: 10px;
+    display: inline-table;
+}
+
+ .signup {
+   display: inline-block;
+    /* width: 300px; */
+ }
+
+#btnLogin, #btnRegister {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+}
+
+/* section {
+    margin-top: 50px;
+} */
+
+#loginForm {
+    display: block;
+    background: cadetblue;
+    margin: 10px;
+    padding: 10px;
+    height: 150px;
+    width: 300px;
+    padding: 10px;
+    position: relative;
+}
+
+#loginForm>* {
+    width: 150px;
+    box-sizing: border-box;
+}
+
+#registerForm {
+    display: block;
+    background: cadetblue;
+    margin: 10px;
+    padding: 10px;
+    height: 150px;
+    width: 300px;
+    position: relative;
+}
+
+#registerForm>* {
+    width: 150px;
+    box-sizing: border-box;
+}
+
+#search-box {
+    text-align: center;
+}
+
+/* COMMENTS */
+
+.comment {
+    overflow: auto;
+    background: mediumturquoise;
+    margin: 10px;
+    position: relative;
+}
+
+.comment-content {
+    display: block;
+    vertical-align: top;
+    padding: 10px;
+}
+
+/* COURSES */
+
+.course {
+    overflow: auto;
+    background: cadetblue;
+    margin: 15px;
+    position: relative;
+}
+
+.clear {
+    clear: both;
+}
+
+.col {
+    float: left;
+    display: inline-block;
+    vertical-align: top;
+    min-height: 100px;
+    padding: 10px;
+}
+
+.thumbnail img {
+    margin-top: auto;
+    margin-bottom: auto;
+    height: auto;
+    width: auto;
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.rank {
+    width: 30px;
+    text-align: center;
+    color: #999999;
+    font-weight: bold;
+}
+
+.rank>span {
+    position: relative;
+    top: 1.5em;
+}
+
+.voting {
+    width: 50px;
+    text-align: center;
+    color: #999999;
+    font-weight: bold;
+}
+
+.thumbnail {
+    width: 100px;
+    text-align: center;
+}
+
+.course-content {
+    display: block;
+    background-color: cadetblue;
+    vertical-align: top;
+    padding: 10px;
+}
+
+.title a {
+    font-size: 1.25em;
+    text-decoration: none;
+}
+
+.details {
+    margin-top: 10px;
+}
+
+.info {
+    color: #999999;
+}
+
+.controls {
+    overflow: auto;
+}
+
+.controls .action {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.controls .action a {
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.controls .action a:hover {
+    color: #000000;
+}
+
+.arrow {
+    font-size: 2em;
+    line-height: 0.75em;
+    cursor: pointer;
+}
+
+.arrow:hover {
+    color: #000000;
+}
+
+.arrow.clicked {
+    color: ivory;
+}
+
+/* HEADER */
+
+header {
+    position: relative;
+    background-color: darkcyan;
+}
+
+.logo, .header {
+    font-size: 3em;
+}
+
+#profile {
+    display: inline-block;
+    background: ivory;
+    text-align: right;
+    vertical-align: bottom;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#profile span {
+    padding: 5px 10px;
+}
+
+#profile a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+#profile a:hover {
+    color: #000000;
+}
+
+/* MENU */
+
+/* #menu {
+    display: inline-block;
+    float: right;
+    border: 1px solid black;
+    margin: 15px;
+    width: 200px;
+}
+
+#menu .title {
+    background: #96cdf2;
+    font-size: 1.25em;
+    font-weight: bold;
+    text-align: center;
+} */
+
+/* 
+.nav {
+    font-size: 1em;
+    display: block;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 10px;
+}
+
+.nav:hover {
+    background: #96cdf2;
+}
+
+.nav:visited {
+}
+
+.nav.active {
+    background: ivory;
+} */
+
+/* NOTIFICATIONS */
+
+#infoBox, #errorBox, #loadingBox {
+    width: 80%;
+    margin: 10px auto;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+#loadingBox {
+    background: #7CB3E9;
+}
+
+#infoBox {
+    background: #393;
+}
+
+#errorBox {
+    background: #F50;
+}
+
+/* SUBMIT */
+
+.submitArea {
+    background: #96cdf2;
+    margin: 20px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.submitForm>* {
+    display: block;
+    width: 400px;
+    box-sizing: border-box;
+}
+
+.submitForm>label {
+    margin-top: 10px;
+}
+
+.submitForm>textarea {
+    resize: none;
+    height: 9em;
+}
+
+.submitForm>input[type="submit"] {
+    margin-top: 10px;
+    width: 100px;
+}
+
+/* dropdown navigation */
+
+.dropbtn {
+    background-color: teal;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: cadetblue;
+}

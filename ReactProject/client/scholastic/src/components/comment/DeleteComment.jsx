@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {Redirect, withRouter} from 'react-router-dom';
+
 import requester from '../../api/requester';
 import observer from '../../api/observer';
 import c from '../../api/constants';
 
+import '../../styles/all.css';
 
 class DeleteComment extends Component {
 

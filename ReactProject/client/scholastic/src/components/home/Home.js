@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import '../../styles/submit.css';
+import '../../styles/all.css';
 
 import LoginForm from '../user/LoginForm';
 import RegisterForm from '../user/RegisterForm';
@@ -10,18 +10,20 @@ import CourseList from '../course/retrive/CourseList';
 
 
 export default class Home extends Component {
-    
+
     render = () => {
-              return (
+        return (
             <section id="viewSignIn">
                 <div className="welcome">
-                    <div></div>
+                    
                     <div className="signup">
-                        <LoginForm {...this.props} />
-                        <RegisterForm {... this.props}/>
+                      <LoginForm {...this.props} />
+                      </div>
+                    <div className="signup">
+                        <RegisterForm {... this.props} />
                     </div>
-                    <About />            
-                    <CourseList limit="5" {...this.props}/>
+                    <About />
+                    <CourseList limit="5" {...this.props} />
                 </div>
             </section>
         )

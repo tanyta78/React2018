@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import './App.css';
-import './styles/site.css';
+import './styles/all.css';
 import userService from './services/userService';
 
 import Header from './components/common/Header';
@@ -32,6 +32,7 @@ import CourseApprove from './components/admin/CourseApprove';
 import NoAccess from './components/common/NoAccess';
 import PrivateRoute from './hocs/PrivateRoute';
 import ProtectedRoute from './hocs/ProtectedRoute';
+import Footer from './components/common/Footer';
 
 
 class App extends Component {
@@ -56,6 +57,7 @@ class App extends Component {
 					<Header />
 					<Notification />
 					<Search />
+					
 					<Route path='/' exact component={Home} />
 					<PrivateRoute path='/catalog' component={Catalog} />
 					<PrivateRoute path='/profile' component = {AuthorProfile}/>
@@ -76,6 +78,7 @@ class App extends Component {
 					<ProtectedRoute path='/allCities' component={CityList}/>
 					<Route path='/noaccess' component={NoAccess}/>
 					<Route path='/logout' component={Logout} />
+					<Footer/>
 				</main>
 			</div>
 		);

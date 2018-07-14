@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../../styles/all.css';
+
 export default () => (
 	<div className="about">
 		<h1>Welcome to SCHOLASTIC</h1>
