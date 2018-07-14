@@ -4,6 +4,7 @@ export default{
 	USER_LOGOUT_SUCCESS:'Logout successfully',
 	COMMENT_DELETE_SUCCESS:'Comment deleted successfully',
 	COURSE_CREATE_SUCCESS:'Course created successfully',
-	COURSE_DELETE_SUCCESS:'Course deleted successfully'
+	COURSE_DELETE_SUCCESS:'Course deleted successfully',
+	COURSE_EDIT_SUCCESS:'Course edited successfully',
 
 } ;

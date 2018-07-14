@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import Course from './Course';
-import '../../styles/course.css';
-import courseService from '../../services/courseService';
+import '../../../styles/course.css';
+import courseService from '../../../services/courseService';
 
 export default class CourseListPublic extends Component {
     constructor(props) {

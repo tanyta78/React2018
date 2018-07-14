@@ -47,7 +47,7 @@ class App extends Component {
 					{/* <Route path='/catalog' exact component={withAdminAuthorization(Catalog)} /> */}
 					<Route path='/catalog' exact component={Catalog} />
 					<Route path='/profile' render={props => <AuthorProfile {...props}/>}/>
-					<Route path='/myCourses'render={props=> <Catalog author='true'/>}/>
+					<Route path='/myCourses' render={props=> <Catalog author='true'/>}/>
 					<Route path='/course/create' component={CourseCreatePage}/>
 					<Route path='/course/details/:id' component={CourseDetails} />
 					<Route path='/course/edit/:id' component={CourseEditPage} />	

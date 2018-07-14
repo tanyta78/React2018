@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
 
-import Navigation from '../common/Navigation';
-import courseService from '../../services/courseService';
-import commentService from '../../services/commentService';
-import authorService from '../../services/authorService';
-import CommentForm from '../comment/CommentForm';
-import CommentList from '../comment/CommentList';
+import Navigation from '../../common/Navigation';
+import courseService from '../../../services/courseService';
+import commentService from '../../../services/commentService';
+import authorService from '../../../services/authorService';
+import CommentForm from '../../comment/CommentForm';
+import CommentList from '../../comment/CommentList';
 
 export default class CourseDetails extends Component {
     constructor(props) {

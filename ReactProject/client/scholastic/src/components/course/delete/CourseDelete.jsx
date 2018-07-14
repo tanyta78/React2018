@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 
 import observer from '../../../api/observer';
-import COURSE_DELETE_SUCCESS from '../../../api/constants';
+import c from '../../../api/constants';
 
-import courseService from '../../services/courseService';
+import courseService from '../../../services/courseService';
 
 export default class CourseDelete extends Component {
 	deleteCourse() {
@@ -12,7 +12,7 @@ export default class CourseDelete extends Component {
 		
 		courseService.deleteCourse(courseId)
 			.then(res => {	
-				observer.trigger(observer.events.notification, {type:'success',message:COURSE_DELETE_SUCCESS});
+				observer.trigger(observer.events.notification, {type:'success',message:c.COURSE_DELETE_SUCCESS});
 
 			}).catch(err => {
 				//handle err msg
@@ -24,7 +24,8 @@ export default class CourseDelete extends Component {
 
 	render(){
 		this.deleteCourse();
-		return <Redirect to="/catalog"/>;
+		
+		return <Redirect to='/myCourses'/>;
 	}
 
 }

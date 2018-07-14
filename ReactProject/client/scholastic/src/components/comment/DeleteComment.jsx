@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 import requester from '../../api/requester';
 import observer from '../../api/observer';
-import COMMENT_DELETE_SUCCESS from '../../api/constants';
+import c from '../../api/constants';
 
 
 export default class DeleteComment extends Component {
@@ -14,7 +14,7 @@ export default class DeleteComment extends Component {
 		
 		requester.remove('appdata', `comments/${commentId}`, 'kinvey')
 			.then(res => {
-				observer.trigger(observer.events.notification, { type: 'success', message: COMMENT_DELETE_SUCCESS });
+				observer.trigger(observer.events.notification, { type: 'success', message:c.COMMENT_DELETE_SUCCESS });
 											
 			})
 			.catch(err => {

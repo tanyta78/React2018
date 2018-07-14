@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import '../../styles/submit.css';
+import '../../../styles/submit.css';
 import observer from '../../../api/observer';
-import COURSE_CREATE_SUCCESS from '../../../api/observer';
+import c from '../../../api/constants';
 
 import courseService from '../../../services/courseService';
 import authorService from '../../../services/authorService';
@@ -44,17 +44,18 @@ export default class CourseCreateForm extends Component {
 			authorId: this.state.authorId,
 			categoryId: e.target.categoryId.value,
 			description: e.target.description.value,
-			duration: e.target.div.value,
+			duration: e.target.duration.value,
 			imageUrl: e.target.imageUrl.value,
 			place: e.target.place.value,
 			price: e.target.price.value,
 			views: 0,
 			likes: 0,
-			approved: false
+			approved: true
+			//TODO: approved: false
 		};
 
 		courseService.createCourse(courseObj).then(res => {
-			observer.trigger(observer.events.notification, { type: 'success', message: COURSE_CREATE_SUCCESS });
+			observer.trigger(observer.events.notification, { type: 'success', message: c.COURSE_CREATE_SUCCESS });
 
 			//to redirect to my course page 
 			this.props.history.push('/myCourses');
@@ -67,12 +68,14 @@ export default class CourseCreateForm extends Component {
 	componentDidMount() {
 		authorService.loadAuthorByUserId(sessionStorage.userId)
 			.then(res=>{
+				console.log(res[0]);
 				requester.get('appdata', 'categories', 'kinvey').then(categories=>{
 					console.log(categories);
 					this.setState({
-						authorId:res._id,
+						authorId:res[0]._id,
 						categories
 					});
+					console.log(this.state);
 				});
 				
 			}).catch(err => observer.trigger(observer.events.notification, {
@@ -82,10 +85,11 @@ export default class CourseCreateForm extends Component {
 	}
 
 	render() {
+		console.log(this.state);
 		return (
 			<div className="submitArea">
 				<h1>Create Course</h1>
-				<p>Please, fill out the form. A thumbnail image/description is not required.</p>
+				<p>Please, fill out the form. </p>
 				<form id="createCourseForm" className="submitForm" onSubmit={this.onFormSubmit}>
 					<label>Category:</label>
 					<input
@@ -117,7 +121,7 @@ export default class CourseCreateForm extends Component {
 						name="place"
 						type="text"
 						onChange={this.onInputChange} />
-					<input type="submit" value="Create Post" />
+					<input type="submit" value="Create Course" />
 				</form>
 			</div>
 

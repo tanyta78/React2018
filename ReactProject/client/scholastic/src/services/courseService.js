@@ -17,36 +17,12 @@ export default {
 	},
 
 	createCourse:(courseObj) => {
-		// courseObj = {
-		// 	authorId,
-		// 	categoryId,
-		// 	description,
-		// 	imageUrl,
-		// 	price,
-		// 	duration,
-		// 	place,
-		// 	approved:false,
-		// 	likes: 0,
-		// 	views: 0
-		// };
-
+		
 		return requester.post('appdata', 'courses', 'kinvey', courseObj);
 	},
 
 	editCourse:(updatedcourseObj) => {
-		// let updatedcourseObj = {
-		// 	authorId,
-		// 	categoryId,
-		// 	description,
-		// 	imageUrl,
-		// 	price,
-		// 	duration,
-		// 	place,
-		// 	approved:false,
-		// 	likes,
-		// 	views
-		// };
-
+		
 		return requester.update('appdata', `courses/${updatedcourseObj.id}`, 'kinvey', updatedcourseObj);
 	},
 

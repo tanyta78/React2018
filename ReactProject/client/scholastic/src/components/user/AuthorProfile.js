@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import authorService from '../../services/authorService';
 import Navigation from '../common/Navigation';
+import observer from '../../api/observer';
 
 
 class AuthorProfile extends Component {
