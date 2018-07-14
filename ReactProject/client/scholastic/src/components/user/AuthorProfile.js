@@ -41,6 +41,7 @@ class AuthorProfile extends Component {
 		//TODO: to check input validation
 		
 		let profile = {
+			authorId:this.state._id,
 			username: e.target.username.value,
 			fullName: e.target.fullName.value,
 			address: e.target.address.value,
@@ -51,8 +52,7 @@ class AuthorProfile extends Component {
 			website: e.target.website.value,
 			personalInfo: e.target.personalInfo.value,
 		};
-		console.log(profile);
-
+	
 		authorService.updateProfile(profile)
 			.then(res => {
 				observer.trigger(observer.events.notification, { type: 'success', message: c.PROFILE_UPDATE });	
@@ -82,19 +82,17 @@ class AuthorProfile extends Component {
 
 	componentDidMount() {
 		// to access detail in AuthorProfile component - withRouter + this.props.location.state.detail
-		let obj = {}
+		
 		if (this.props.location.state !== undefined) {
-			console.log('from profile after register redirect');
-
-			console.log(this.props);
-			Object.assign(obj, this.props, this.props.location.state.detail);
-			this.setState(obj);
+			let author=this.props.location.state.detail;
+			console.log(author);
+			this.setState(this.props.location.state.detail);
 
 		} else {
 			authorService.loadAuthorByUserId(sessionStorage.userId)
 				.then(res => {
-					Object.assign(obj, this.props, res[0]);
-					this.setState(res[0]);
+						this.setState(res[0]);
+				
 				});
 		}
 
@@ -111,53 +109,53 @@ class AuthorProfile extends Component {
 					<input name="username"
 						type="text"
 						onChange={this.onInputChange}
-						value={this.state.username} />
+						value={this.state.username} /><br/>
 					<label>Full name:</label>
 					<input name="fullName"
 						type="text"
 						onChange={this.onInputChange}
-						value={this.state.fullName} />
+						value={this.state.fullName} /><br/>
 					<label>Address:</label>
 					<input name="address"
 						type="text"
 						onChange={this.onInputChange}
-						value={this.state.address} />
+						value={this.state.address} /><br/>
 
 					<label>Phone:</label>
 					<input name="phone"
 						type="text"
 						onChange={this.onInputChange}
-						value={this.state.phone} />
+						value={this.state.phone} /><br/>
 
 					<label>Email:</label>
 					<input name="email"
 						type="text"
 						onChange={this.onInputChange}
-						value={this.state.email} />
+						value={this.state.email} /><br/>
 
 					<label>City:</label>
 					<input name="cityId"
 						type="text"
 						onChange={this.onInputChange}
-						value={this.state.cityId} />
+						value={this.state.cityId} /><br/>
 
 					<label>Avatar:</label>
 					<input name="profileImg"
 						type="text"
 						onChange={this.onInputChange}
-						value={this.state.profileImg} />
+						value={this.state.profileImg} /><br/>
 
 					<label>Website:</label>
 					<input name="website"
 						type="text"
 						onChange={this.onInputChange}
-						value={this.state.website} />
+						value={this.state.website} /><br/>
 
 					<label>Personal Info:</label>
 					<input name="personalInfo"
 						type="text"
 						onChange={this.onInputChange}
-						value={this.state.personalInfo} />
+						value={this.state.personalInfo} /><br/>
 
 					<input id="btnUpdateProfile" type="submit" value="Save Profile" />
 				</form>

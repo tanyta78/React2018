@@ -19,7 +19,7 @@ export default class Header extends Component {
 	}
 
     userLoggedIn = username =>
-        this.setState({ username });
+    this.setState({username:username});
 
     render = () => {
         const loggedInSection =  

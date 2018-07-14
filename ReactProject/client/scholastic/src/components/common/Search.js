@@ -66,12 +66,12 @@ class Search extends Component {
 				<div className="Search-result-container">
 					{searchResults.map(result => (
 						<div
-							key={result.id}
+							key={result._id}
 							className="Search-result"
-							onClick={()=>this.handleRedirect(result.id)}
+							onClick={()=>this.handleRedirect(result._id)}
 						>
 							{/* TODO: what to show in search results - category,city,price,duration or Course  */}
-							{result.name}({result.symbol})
+							{result.categotyId}|({result.description})|({result.price})|({result.duration})
 						</div>
 					))}
 				</div>

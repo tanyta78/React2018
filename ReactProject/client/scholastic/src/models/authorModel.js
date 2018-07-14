@@ -22,6 +22,5 @@ export default {
 			return 'Password is required.';
 		}
 		
-		//TODO: add validation
 	}
 };

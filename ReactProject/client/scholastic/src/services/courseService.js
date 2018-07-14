@@ -66,7 +66,7 @@ export default {
 
 	// casesensitive startWith = courses/?query={"firstName":{"$regex":"^Jo"} }
 	searchCourses:(searchterm)=>{
-		let endpoint = `courses/?query={"$or":[{"name":{"$regex":"^${searchterm}"}},{"description":{"$regex":"^${searchterm}"}},{"tags":{"$regex":"^${searchterm}"}}]}`;
+		let endpoint = `courses/?query={"$or":[{"price":{"$regex":"^${searchterm}"}},{"description":{"$regex":"^${searchterm}"}},{"place":{"$regex":"^${searchterm}"}}]}`;
 		return requester.get('appdata',endpoint,'kinvey');
 	}
 

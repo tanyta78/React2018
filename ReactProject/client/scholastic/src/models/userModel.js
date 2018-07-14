@@ -10,10 +10,9 @@ export default {
 			return 'Username is required';
 		}
 
-		if (!password) {
-			return 'Password is required.';
+		if (!password || password.length < 3  ) {
+			return 'Password is required and must be more than 3 symbols';
 		}
-		
-		//TODO: add validation
+	
 	}
 };

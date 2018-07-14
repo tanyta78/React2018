@@ -9,7 +9,9 @@ export default{
 	},
 
 	create:{
-		send: data  => requester.post('appdata', 'comments', 'kinvery', data),
+		send: data  => {
+			data.username = sessionStorage.username;
+			return requester.post('appdata', 'comments', 'kinvery', data);},
 		fail: res => observer.trigger(observer.events.notification, res.responseJSON.message)
 	},
 

@@ -12,7 +12,8 @@ class RegisterForm extends Component {
 
 		this.state = {
 			username: '',
-			password: ''
+			password: '',
+			repeatPass:''
 		};
 
 		this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -28,7 +29,16 @@ class RegisterForm extends Component {
 
 	onFormSubmit(e) {
 		e.preventDefault();
-		// to check input validation
+
+		if (! this.isFormValid(this.state)){
+			observer.trigger(observer.events.notification, {
+				type: 'error',
+				message: 'Check inputs'
+			});
+			this.setState({ username: '', password: '', repeatPass:'' });
+			return;
+		}
+
 		let user = {
 			username: this.state.username,
 			password: this.state.password
@@ -36,8 +46,8 @@ class RegisterForm extends Component {
 
 		requester.post('user', '', 'basic', user)
 			.then(res => {
-				console.log('form user creation');
-				console.log(res);
+console.log('form user creation');
+console.log(res);
 				observer.trigger(observer.events.loginUser, res.username);
 				observer.trigger(observer.events.notification, { type: 'success', message: c.USER_REGISTER_SUCCESS });
 				let userRoles = res._kmd.roles ? res._kmd.roles.map(r => r.roleId) : [];
@@ -47,10 +57,9 @@ class RegisterForm extends Component {
 				sessionStorage.setItem('userId', res._id);
 				authorService.createAuthor(res._id)
 					.then(authorObj => {
-						console.log('form author creation');
-
-						console.log(authorObj);
-						console.log(this.props);
+		console.log('form author creation');
+		console.log(authorObj);
+		console.log(this.props);
 						this.props.history.push(
 							{
 								pathname: '/profile',
@@ -73,6 +82,13 @@ class RegisterForm extends Component {
 
 	}
 
+	isFormValid(input) {
+		let validUsername = input.username !== '' ? true : false;
+		let validPassword = (input.password.length > 3 &&
+			input.password !== '' &&
+			input.password === input.repeatPass);
+		return validPassword && validUsername;
+	}
 
 	render() {
 		return (
@@ -82,17 +98,20 @@ class RegisterForm extends Component {
 				<input
 					name="username"
 					type="text"
-					onChange={this.onInputChange} /><br/>
+					onChange={this.onInputChange}
+					value={this.state.username} /><br />
 				<label>Password :</label>
 				<input
 					name="password"
 					type="password"
-					onChange={this.onInputChange} /><br/>
+					onChange={this.onInputChange} 
+					value={this.state.password}/><br />
 				<label>Repeat Pass:</label>
 				<input
 					name="repeatPass"
 					type="password"
-					onChange={this.onInputChange} />
+					onChange={this.onInputChange} 
+					value={this.state.repeatPass}/>
 				<input id="btnRegister" type="submit" value="Sign Up" />
 			</form>
 		);
