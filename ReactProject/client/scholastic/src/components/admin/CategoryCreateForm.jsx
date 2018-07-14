@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { withRouter} from 'react-router-dom';
 
 import '../../styles/submit.css';
+
 import observer from '../../api/observer';
-import c from '../../api/constants';
-
 import requester from '../../api/requester';
-
+import c from '../../api/constants';
 
 class CategoryCreateForm extends Component {
 	constructor(props) {

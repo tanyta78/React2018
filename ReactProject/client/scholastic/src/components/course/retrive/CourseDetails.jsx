@@ -7,6 +7,7 @@ import authorService from '../../../services/authorService';
 import CommentForm from '../../comment/CommentForm';
 import CommentList from '../../comment/CommentList';
 
+//TODO: FINAL CHANGES
 export default class CourseDetails extends Component {
     constructor(props) {
         super(props);

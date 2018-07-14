@@ -50,8 +50,8 @@ export default class CourseCreateForm extends Component {
 			price: e.target.price.value,
 			views: 0,
 			likes: 0,
-			approved: true
-			//TODO: approved: false
+			approved: false
+			
 		};
 
 		courseService.createCourse(courseObj).then(res => {

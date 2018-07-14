@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import authorService from '../../services/authorService';
 import requester from '../../api/requester';
 import observer from '../../api/observer';
+import c from '../../api/constants';
 
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
 	constructor(props) {
 		super(props);
 
@@ -31,38 +33,44 @@ export default class RegisterForm extends Component {
 			username: this.state.username,
 			password: this.state.password
 		};
-		
+
 		requester.post('user', '', 'basic', user)
-			.then(res=>{
+			.then(res => {
 				console.log('form user creation');
 				console.log(res);
 				observer.trigger(observer.events.loginUser, res.username);
-				//TODO: trigger success msg notification
+				observer.trigger(observer.events.notification, { type: 'success', message: c.USER_REGISTER_SUCCESS });
 				let userRoles = res._kmd.roles ? res._kmd.roles.map(r => r.roleId) : [];
 				sessionStorage.setItem('authtoken', res._kmd.authtoken);
 				sessionStorage.setItem('userRoles', userRoles.join(','));
 				sessionStorage.setItem('username', res.username);
 				sessionStorage.setItem('userId', res._id);
 				authorService.createAuthor(res._id)
-					.then(authorObj=>{
+					.then(authorObj => {
 						console.log('form author creation');
 
 						console.log(authorObj);
 						console.log(this.props);
 						this.props.history.push(
 							{
-								pathname: `/profile/${authorObj._id}`,
-								state: { detail: authorObj }				  
+								pathname: '/profile',
+								state: { detail: authorObj }
 							});
-					// to access detail in AuthorProfile component - withRouter + this.props.location.state.detail
-					//TODO: handle success msg
+						// to access detail in AuthorProfile component - withRouter + this.props.location.state.detail
+						observer.trigger(observer.events.notification, { type: 'success', message: c.AUTHOR_REGISTER_SUCCESS });
 
 					})
 					.catch(
-					//TODO: handle error msg
+						err => {
+							observer.trigger(observer.events.notification, {
+								type: 'error',
+								message: err.responseJSON.description
+							});
+							this.setState({ username: '', password: '' });
+						}
 					);
 			});
-	  
+
 	}
 
 
@@ -74,13 +82,13 @@ export default class RegisterForm extends Component {
 				<input
 					name="username"
 					type="text"
-					onChange={this.onInputChange} />
-				<label>Password:</label>
+					onChange={this.onInputChange} /><br/>
+				<label>Password :</label>
 				<input
 					name="password"
 					type="password"
-					onChange={this.onInputChange} />
-				<label>Repeat Password:</label>
+					onChange={this.onInputChange} /><br/>
+				<label>Repeat Pass:</label>
 				<input
 					name="repeatPass"
 					type="password"
@@ -90,3 +98,5 @@ export default class RegisterForm extends Component {
 		);
 	}
 }
+
+export default withRouter(RegisterForm);

@@ -39,11 +39,16 @@ export default class Course extends Component {
         } else {
             approvedSymbol = (<span> &#9746;</span>);
         };
-        const isAdmin = sessionStorage.userRoles.indexOf(c.ADMIN_ROLE_ID) !== -1;
+
+        let isAdmin= false;
+        if(sessionStorage.userRoles !== undefined){
+            isAdmin= sessionStorage.userRoles.indexOf(c.ADMIN_ROLE_ID) !== -1;
+        } 
+
         return (
             <article className="course">
                 <div className="col rank">
-                    <span>{this.props.index + 1}</span>
+                    <span>{this.props.rank }</span>
                 </div>
                 <div className="col thumbnail">
                     <img src={this.props.imageUrl} alt='profile' />

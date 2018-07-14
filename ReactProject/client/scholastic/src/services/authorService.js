@@ -22,9 +22,10 @@ export default{
 
 	//user/update => author/update
 	updateProfile:(data)=> {
+		console.log(data);
 		let updatedProfileData = {
 			username:sessionStorage.username,
-			userId:data.userId,
+			userId:sessionStorage.userId,
 			fullName:data.fullName,
 			address:data.address,
 			phone:data.phone,

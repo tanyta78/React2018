@@ -15,7 +15,6 @@ export default class Category extends Component{
 					{this.props.name}
 
 				</div>
-				
 				{isAdmin && <Link to={`/category/delete/${this.props._id}`} className="deletePost">Delete</Link>}
 			</article>
 		);

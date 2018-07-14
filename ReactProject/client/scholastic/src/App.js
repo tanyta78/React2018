@@ -12,7 +12,6 @@ import Search from './components/common/Search';
 
 import AuthorProfile from './components/user/AuthorProfile';
 import Logout from './components/user/Logout';
-//import { withAdminAuthorization } from './hocs/withAuthorization';
 import Catalog from './components/course/retrive/Catalog';
 import CourseDetails from './components/course/retrive/CourseDetails';
 import CourseCreatePage from './components/course/create/CourseCreatePage';
@@ -29,6 +28,10 @@ import CityDelete from './components/admin/CityDelete';
 import CategoryList from './components/admin/CategoryList';
 import CategoryDelete from './components/admin/CategoryDelete';
 import CourseApprove from './components/admin/CourseApprove';
+
+import NoAccess from './components/common/NoAccess';
+import PrivateRoute from './hocs/PrivateRoute';
+import ProtectedRoute from './hocs/ProtectedRoute';
 
 
 class App extends Component {
@@ -54,24 +57,24 @@ class App extends Component {
 					<Notification />
 					<Search />
 					<Route path='/' exact component={Home} />
-					{/* <Route path='/catalog' exact component={withAdminAuthorization(Catalog)} /> */}
-					<Route path='/catalog' component={Catalog} />
-					<Route path='/profile' render={props => <AuthorProfile {...props}/>}/>
-					<Route path='/myCourses' render={props=> <Catalog author='true'/>}/>
-					<Route path='/course/create' component={CourseCreatePage}/>
-					<Route path='/course/details/:id' component={CourseDetails} />
-					<Route path='/course/edit/:id' component={CourseEditPage} />	
-					<Route path='/course/delete/:id' render={props => <CourseDelete {...props}/>} />
-					<Route path='/comment/delete/:id' render={props => <DeleteComment {...props}/>}/>
-					<Route path='/admin' component={AdminPanel}/>
-					<Route path='/course/approve' exact render={props=> <Catalog {...props}/>}/>
-					<Route path='/course/approve/:id' render={props =><CourseApprove {...props}/>}/>
-					<Route path='/category/create' render={props =><CategoryCreateForm {...this.props}/>}/>
-					<Route path='/category/delete/:id' render={props =><CategoryDelete {...props}/>}/>
-					<Route path='/city/create' render={props =><CityCreateForm {...this.props}/>}/>
-					<Route path='/city/delete/:id' render={props =><CityDelete {...props}/>}/>
-					<Route path='/allCategories' component={CategoryList}/>
-					<Route path='/allCities' component={CityList}/>
+					<PrivateRoute path='/catalog' component={Catalog} />
+					<PrivateRoute path='/profile' component = {AuthorProfile}/>
+					<PrivateRoute path='/myCourses' component={Catalog} author='true'/>
+					<PrivateRoute path='/course/create' component={CourseCreatePage}/>
+					<PrivateRoute path='/course/details/:id' component={CourseDetails} />
+					<PrivateRoute path='/course/edit/:id' component={CourseEditPage} />	
+					<PrivateRoute path='/course/delete/:id' component ={CourseDelete} />
+					<PrivateRoute path='/comment/delete/:id' component ={DeleteComment}/>
+					<ProtectedRoute path='/admin' component={AdminPanel}/>
+					<ProtectedRoute path='/course/approve' exact component={Catalog}/>
+					<ProtectedRoute path='/course/approve/:id' component={CourseApprove}/>
+					<ProtectedRoute path='/category/create' component={CategoryCreateForm }/>
+					<ProtectedRoute path='/category/delete/:id' component={CategoryDelete}/>
+					<ProtectedRoute path='/city/create' component={CityCreateForm}/>
+					<ProtectedRoute path='/city/delete/:id' component={CityDelete}/>
+					<ProtectedRoute path='/allCategories' component={CategoryList}/>
+					<ProtectedRoute path='/allCities' component={CityList}/>
+					<Route path='/noaccess' component={NoAccess}/>
 					<Route path='/logout' component={Logout} />
 				</main>
 			</div>

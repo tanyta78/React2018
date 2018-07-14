@@ -7,9 +7,9 @@ import '../../styles/comment.css';
 export default class Comment extends Component{
 
 	isAuthor = ()=>{
-		return true;
+		// return true;
 		//TODO: validate!!!
-		// this.props.username===sessionStorage.username;
+		return this.props.username===sessionStorage.username;
 	}
 
 	render (){

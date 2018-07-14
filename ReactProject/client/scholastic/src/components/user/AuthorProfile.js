@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+
 import authorService from '../../services/authorService';
-import Navigation from '../common/Navigation';
 import observer from '../../api/observer';
+import c from '../../api/constants';
+
+import Navigation from '../common/Navigation';
 
 
 class AuthorProfile extends Component {
@@ -36,7 +39,7 @@ class AuthorProfile extends Component {
 	onFormSubmit(e) {
 		e.preventDefault();
 		//TODO: to check input validation
-		console.log(e.target);
+		
 		let profile = {
 			username: e.target.username.value,
 			fullName: e.target.fullName.value,
@@ -52,8 +55,7 @@ class AuthorProfile extends Component {
 
 		authorService.updateProfile(profile)
 			.then(res => {
-				observer.trigger(observer.events.notification, { type: 'success', message: 'Profile updated successful.' });
-				
+				observer.trigger(observer.events.notification, { type: 'success', message: c.PROFILE_UPDATE });	
 				this.props.history.push('/catalog');
 			})
 			.catch(err => {
@@ -82,6 +84,9 @@ class AuthorProfile extends Component {
 		// to access detail in AuthorProfile component - withRouter + this.props.location.state.detail
 		let obj = {}
 		if (this.props.location.state !== undefined) {
+			console.log('from profile after register redirect');
+
+			console.log(this.props);
 			Object.assign(obj, this.props, this.props.location.state.detail);
 			this.setState(obj);
 
@@ -89,13 +94,14 @@ class AuthorProfile extends Component {
 			authorService.loadAuthorByUserId(sessionStorage.userId)
 				.then(res => {
 					Object.assign(obj, this.props, res[0]);
-					this.setState(obj)
-				})
+					this.setState(res[0]);
+				});
 		}
 
 	}
 
 	render = () => {
+		
 		return (
 			<section id="authorProfile">
 				<Navigation />

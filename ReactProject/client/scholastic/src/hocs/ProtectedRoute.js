@@ -1,23 +1,27 @@
 import React from 'react';
 import {Redirect, Route} from 'react-router-dom';
-import Auth from './Auth';
+import c from '../api/constants';
 
-function protectedRoute (allowedRoles,inRole){
-	return function (WrappedComponent) { 
-		return function ({role,...rest}) { 
-			if(inRole(allowedRoles)){
-				return <WrappedComponent {...rest}/>;
-			}
-			return <h1>Not Authorized</h1>;
-			// this can be redirect
-		};
-	};
+function isUserAuthenticated(){
+	if(sessionStorage.userRoles !== undefined){
+		return sessionStorage.userRoles.indexOf(c.ADMIN_ROLE_ID)!== -1;
+	}else{
+		return false;
+	}
 }
 
-export default protectedRoute;
+const ProtectedRoute = ({component: Component, ...rest}) => (
+	<Route {...rest} render={props => (
+		isUserAuthenticated() ? (
+			<Component {...props}{...rest} />
+		) : (
+			<Redirect to={{
+				pathname: '/',
+				state: { from: props.location }
+			}} />
+		)
+	)
+	} />
+);
 
-//usage
-// const AdminRoute = protectedRoute(['admin'],inRole);
-// const MyProtectedRoute = AdminRoute(MyComponent);
-
-// <Route path='/admin' component={MyProtectedRoute};
+export default ProtectedRoute;

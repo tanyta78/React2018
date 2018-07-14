@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Course from './Course';
 import '../../../styles/course.css';
 import courseService from '../../../services/courseService';
+import c from '../../../api/constants';
 
 export default class CourseList extends Component {
 	constructor(props) {
@@ -21,6 +22,10 @@ export default class CourseList extends Component {
 
 		if(this.props.all){
 			endpoint='courses?query={"approved":"true"}&sort={"_kmd.ect": -1}';
+		}
+
+		if(this.props.limit){
+			endpoint=(`courses?query={"approved":"true"}&sort={"_kmd.ect": -1}&limit=${c.LIMIT_COURSE_SHOWN}`);
 		}
 		
 		courseService.loadAllApprovedCourses(endpoint)

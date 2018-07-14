@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import requester from '../../api/requester';
 import observer from '../../api/observer';
 import c from '../../api/constants';
 
 
-export default class DeleteComment extends Component {
+class DeleteComment extends Component {
 
 	deleteComment() {
 		let commentId=this.props.match.params.id;
@@ -32,3 +32,5 @@ export default class DeleteComment extends Component {
 	}
 
 }
+
+export default withRouter(DeleteComment);

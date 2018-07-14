@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Navigation from '../../common/Navigation';
 import AdminNavigation from '../../common/AdminNavigation';
@@ -9,20 +9,25 @@ import c from '../../../api/constants';
 
 class Catalog extends Component {
 
-	render () {
-		console.log('from catalog');
+	isAdmin = () =>{
+		if (sessionStorage.userRoles !== undefined) {
+			return sessionStorage.userRoles.indexOf(c.ADMIN_ROLE_ID) !== -1;
+		}
+		else {
+			return false;
+		}
+	}
+
+	render() {
 	
-		const isAdmin= sessionStorage.userRoles.indexOf(c.ADMIN_ROLE_ID)!== -1;
-		// const all = this.props.location.all;
-		console.log(this.props);
-		// const navigation = isAdmin ? <AdminNavigation/> : <Navigation />;
 		return (
 			<div>
-				{isAdmin && <AdminNavigation/>}
+				{this.isAdmin() && <AdminNavigation />}
 				<Navigation />
-				<CourseList author={this.props.author} admin={isAdmin} />
+				<CourseList author={this.props.author} admin={this.isAdmin()} />
 			</div>
 		);
+
 	}
 }
 

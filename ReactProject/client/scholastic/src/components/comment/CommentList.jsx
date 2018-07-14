@@ -6,7 +6,7 @@ import '../../styles/comment.css'
 export default class CommentList extends Component {
     render = () => {
         const comments = this.props.comments.map((c, i) => {
-            return <Comment key={i} index={i} {...c} remove={this.props.remove} />;
+            return <Comment key={i} index={i} {...c} author={this.props.username} remove={this.props.remove} />;
         });
             
         return (
