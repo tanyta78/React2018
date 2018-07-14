@@ -13,7 +13,8 @@ export default class Navigation extends Component {
 				<NavLink className="nav" to='/profile'>Profile</NavLink>
 				<NavLink className="nav" to='/course/create'>Add new course</NavLink>
 				<NavLink className="nav" to='/myCourses'>My courses</NavLink>
-                
+				{/* //TODO: add admin check */}
+				<NavLink className="nav" to='/admin'>Admin panel</NavLink>                
 			</div>
 		);
 	} 

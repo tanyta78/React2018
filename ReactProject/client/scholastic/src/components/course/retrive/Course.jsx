@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import courseService from '../../../services/courseService';
 import requester from '../../../api/requester';
+import c from '../../../api/constants';
 
 export default class Course extends Component {
     constructor(props) {
@@ -18,27 +19,27 @@ export default class Course extends Component {
         let categoryId = this.props.categoryId;
         requester.get('appdata', `categories/${categoryId}`, 'kinvey')
             .then(res => {
-                console.log(res);
+              
                 let categoryName = res.name;
-                console.log(categoryName);
+              
                 this.setState({ categoryName })
             })
 
     }
 
-    isAuthor(){
-		console.log(this.props);
-		return this.props._acl.creator===sessionStorage.userId;
-	}
+    isAuthor() {
+        return this.props._acl.creator === sessionStorage.userId;
+    }
 
 
     render = () => {
-        let approvedSymbol ;
-        if(this.props.approved === 'true' ) {
-        approvedSymbol=(<span> &#9745;</span>);
+        let approvedSymbol;
+        if (this.props.approved === 'true') {
+            approvedSymbol = (<span> &#9745;</span>);
         } else {
-        approvedSymbol=(<span> &#9746;</span>);
-        } 
+            approvedSymbol = (<span> &#9746;</span>);
+        };
+        const isAdmin = sessionStorage.userRoles.indexOf(c.ADMIN_ROLE_ID) !== -1;
         return (
             <article className="course">
                 <div className="col rank">
@@ -66,18 +67,25 @@ export default class Course extends Component {
                                 <li className="action">
                                     <Link to={`/course/details/${this.props._id}`}>Details</Link>
                                 </li>
-                                {this.isAuthor() && 
+                                {this.isAuthor() &&
                                     <li className="action">
                                         <Link to={`/course/edit/${this.props._id}`}>Edit</Link>
                                     </li>}
-                                    {this.isAuthor() && 
+                                {this.isAuthor() &&
                                     <li className="action">
                                         <Link to={`/course/delete/${this.props._id}`} >Delete</Link>
                                     </li>}
-                                    {this.isAuthor() && 
+                                {this.isAuthor() &&
                                     <li className="action">
                                         Approved {approvedSymbol}
                                     </li>}
+                                {
+                                    isAdmin &&
+                                    <li className="action">
+                                       <Link to={`/course/approve/${this.props._id}`} >Approve Course</Link>
+                                    </li>
+
+                                }
                             </ul>
                         </div>}
 

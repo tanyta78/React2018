@@ -8,6 +8,7 @@ export default class Comment extends Component{
 
 	isAuthor = ()=>{
 		return true;
+		//TODO: validate!!!
 		// this.props.username===sessionStorage.username;
 	}
 

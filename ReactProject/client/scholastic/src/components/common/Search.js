@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom';
-import Loading from '../common/Loading';
+import Loading from './Loading';
 import './Search.css';
 import courseService from '../../services/courseService';
 

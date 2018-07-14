@@ -20,7 +20,7 @@ export default class Home extends Component {
                         <RegisterForm {... this.props}/>
                     </div>
                     <About />
-                    {/* <CourseListPublic {...this.props}/> */}
+                  
                     <CourseList {...this.props}/>
                 </div>
             </section>

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../../../styles/course.css';
 
 import observer from '../../../api/observer';
-import requester from '../../../api/requester';
 
 import c from '../../../api/constants';
 import courseService from '../../../services/courseService';

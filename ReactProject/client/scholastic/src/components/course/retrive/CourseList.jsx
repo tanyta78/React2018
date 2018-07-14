@@ -15,6 +15,14 @@ export default class CourseList extends Component {
 	componentDidMount() {
 		let endpoint = this.props.author ? `courses?query={"_acl.creator":"${sessionStorage.userId}"}&sort={"_kmd.ect": -1}`:'courses?query={"approved":"true"}&sort={"_kmd.ect": -1}';
 
+		if(this.props.admin){
+			endpoint='courses?query={"approved":"false"}&sort={"_kmd.ect": -1}';
+		}
+
+		if(this.props.all){
+			endpoint='courses?query={"approved":"true"}&sort={"_kmd.ect": -1}';
+		}
+		
 		courseService.loadAllApprovedCourses(endpoint)
 			.then(res => {
 				this.setState({ courses: res });
@@ -23,23 +31,10 @@ export default class CourseList extends Component {
 	}
        
 	render() {
-		//let userId=sessionStorage.getItem('userId');
+	
 		return (
 			<section id="viewCatalog">
-				{/* {this.state.courses
-					.map((p, i) => {
-						let isAuthor = userId === p._acl.creator;
-						console.log('is author from courselist');
-						console.log(isAuthor);
-                        
-						return (
-							<Course
-								key={p._id}
-								index={i}
-								isAuthor={isAuthor}
-								{...p} 
-							/>);
-                    })} */}
+				
 				{this.state.courses.map((p, i) =>
 					<Course key={p._id} rank={i+1} courseId={p._id} {...p} />				
 				)}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import withFormManager from './../../hocs/withFormManager';
+import withFormManager from '../../hocs/withFormManager';
 import commentService from '../../services/commentService';
 import commentModel from '../../models/commentModel';
 
