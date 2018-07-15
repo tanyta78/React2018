@@ -11,7 +11,6 @@
 } */
 
 body {
-    background: #dddddd;
     min-height: 100vh;
 }
 
@@ -108,7 +107,7 @@ footer img {
 
 .comment {
     overflow: auto;
-    background: mediumturquoise;
+    background: cadetblue;
     margin: 10px;
     position: relative;
 }
@@ -152,7 +151,7 @@ footer img {
 .rank {
     width: 30px;
     text-align: center;
-    color: #999999;
+    color: black;
     font-weight: bold;
 }
 
@@ -164,7 +163,7 @@ footer img {
 .voting {
     width: 50px;
     text-align: center;
-    color: #999999;
+    color: black;
     font-weight: bold;
 }
 
@@ -190,7 +189,7 @@ footer img {
 }
 
 .info {
-    color: #999999;
+    color: #black;
 }
 
 .controls {
@@ -262,43 +261,6 @@ header {
     color: #000000;
 }
 
-/* MENU */
-
-/* #menu {
-    display: inline-block;
-    float: right;
-    border: 1px solid black;
-    margin: 15px;
-    width: 200px;
-}
-
-#menu .title {
-    background: #96cdf2;
-    font-size: 1.25em;
-    font-weight: bold;
-    text-align: center;
-} */
-
-/* 
-.nav {
-    font-size: 1em;
-    display: block;
-    text-decoration: none;
-    padding: 5px 10px;
-    margin: 10px;
-}
-
-.nav:hover {
-    background: #96cdf2;
-}
-
-.nav:visited {
-}
-
-.nav.active {
-    background: ivory;
-} */
-
 /* NOTIFICATIONS */
 
 #infoBox, #errorBox, #loadingBox {
@@ -325,7 +287,7 @@ header {
 /* SUBMIT */
 
 .submitArea {
-    background: #96cdf2;
+    background-color: darkcyan;
     margin: 20px;
     padding: 20px;
     overflow: auto;

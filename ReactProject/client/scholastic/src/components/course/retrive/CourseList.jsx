@@ -23,7 +23,7 @@ export default class CourseList extends Component {
 		}
 
 		if(this.props.all){
-			endpoint='courses?query={"approved":"true"}&sort={"_kmd.ect": -1}';
+			endpoint='courses?sort={"_kmd.ect": -1}';
 		}
 
 		if(this.props.limit){

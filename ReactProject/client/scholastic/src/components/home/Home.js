@@ -7,8 +7,6 @@ import RegisterForm from '../user/RegisterForm';
 import About from './About';
 import CourseList from '../course/retrive/CourseList';
 
-
-
 export default class Home extends Component {
 
     render = () => {

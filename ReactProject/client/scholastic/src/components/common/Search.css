@@ -58,7 +58,7 @@
   position: relative;
   width: 100%;
   max-height: 299px;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   background-color: #0f273d;
   border: 1px solid #0c2033;
   border-radius: 4px;

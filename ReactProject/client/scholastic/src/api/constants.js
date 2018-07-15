@@ -15,5 +15,5 @@ export default{
 	LIMIT_COURSE_SHOWN:2,
 	NO_ACCESS:'No access to this page. Please login or contact with administrator.',
 	PROFILE_UPDATE:'Profile updated successful.',
-	ADMIN_ROLE_ID:'c02209d0-9347-4d1e-925a-1e4827ce90b9'
+	ADMIN_ROLE_ID:'2cd32c1d-4741-4bdc-8bef-4003c0b3171c'
 } ;

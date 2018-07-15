@@ -67,5 +67,10 @@ export default {
 					message: err.responseJSON.description
 				});
 			});
+	},
+	getAllUsers:()=>{
+		requester.get('users', '', 'kinvey')
+			.then(res => {});
+
 	}
 };

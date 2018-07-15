@@ -33,6 +33,7 @@ import NoAccess from './components/common/NoAccess';
 import PrivateRoute from './hocs/PrivateRoute';
 import ProtectedRoute from './hocs/ProtectedRoute';
 import Footer from './components/common/Footer';
+import UserList from './components/user/UsersList';
 
 
 class App extends Component {
@@ -76,6 +77,7 @@ class App extends Component {
 					<ProtectedRoute path='/city/delete/:id' component={CityDelete}/>
 					<ProtectedRoute path='/allCategories' component={CategoryList}/>
 					<ProtectedRoute path='/allCities' component={CityList}/>
+					<ProtectedRoute path='/allUsers' component={UserList}/>
 					<Route path='/noaccess' component={NoAccess}/>
 					<Route path='/logout' component={Logout} />
 					<Footer/>
