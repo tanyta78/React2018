@@ -69,8 +69,7 @@ export default {
 			});
 	},
 	getAllUsers:()=>{
-		requester.get('users', '', 'kinvey')
-			.then(res => {});
+		return requester.get('user', '', 'kinvey');
 
 	}
 };

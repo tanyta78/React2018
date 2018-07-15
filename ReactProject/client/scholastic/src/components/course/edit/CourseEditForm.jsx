@@ -94,7 +94,7 @@ export default class CourseEditForm extends Component {
 
 			}).catch(err => {
 				console.log(err);
-				//todo handlee error
+				
 			});
 	}
 

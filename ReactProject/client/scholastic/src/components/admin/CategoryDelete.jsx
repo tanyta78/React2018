@@ -18,7 +18,6 @@ export default class CategoryDelete extends Component {
 											
 			})
 			.catch(err => {
-			
 				console.log(err);
 				observer.trigger(observer.events.notification, { type: 'error', message: err.responseJSON.description });
 			});

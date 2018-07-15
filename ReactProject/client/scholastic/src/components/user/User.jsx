@@ -1,11 +1,11 @@
 import React,{Component} from 'react';
-import {Link} from 'react-router-dom';
+
+import {Link,withRouter} from 'react-router-dom';
 
 import '../../styles/all.css';
 
-export default class User extends Component{
+class User extends Component{
 
-	
 	render (){
 		console.log(this.props);
 		
@@ -23,3 +23,4 @@ export default class User extends Component{
 		
 	}
 }
+export default withRouter(User);
